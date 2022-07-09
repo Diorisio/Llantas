@@ -1,0 +1,26 @@
+.login-formulario{
+margin: 10%;
+}
+.MuiFormControl-root{
+    background: white;
+}
+.login{
+    display: flex;
+}
+.login button{
+    margin-left: 100px;
+
+}
+.login picture img{
+    width: 80%;
+}
+.login picture{
+    width: 50%;
+    margin: 10%;
+}
+.opciones{
+    display: inline-grid;
+}
+.opciones a{
+    margin-left: 70px;
+}

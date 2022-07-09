@@ -1,0 +1,22 @@
+
+.footer-informacion{
+    
+    gap: 140px;
+    display: flex;
+    background-color: #038554;
+}
+.enlacesfooter{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center; 
+    justify-content: space-evenly;
+}
+.enlacesfooter a,.enlacesgeneral {
+    text-decoration: none;
+    color: black;
+}
+.informacion{
+    display: flex;
+    flex-direction: column;
+    
+}

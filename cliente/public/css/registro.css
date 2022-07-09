@@ -1,0 +1,18 @@
+.formulario{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formulario div{
+
+    width: 30ch;
+}
+.botonenviar{
+    display: flex;
+    justify-content: center; 
+}
+.persona{
+    font-size: 70px !important;
+    width: 103% !important;
+}
