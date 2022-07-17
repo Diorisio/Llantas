@@ -11,9 +11,15 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Alert from '@mui/material/Alert';
 
 import loginservices from '../services/login-services'
 
+const expresiones={
+  nombre:/^[a-zA-Z\_\-]{4,16}$/,
+}
+const errores=['false','false','false','false','false','false','false']
 
 
 function Register() {
@@ -41,14 +47,26 @@ function Register() {
     const direccion=direccion1act.concat(' ',direccion5act,direccion2act,' ',direccion3act,direccion6act,'-',direccion4act,' ',direccion7act)
     loginservices.register(nombreact,correoact,contrasenaact,telefonoact,celularact,cargoact,direccion)
     navigate("/");
-
      
     } catch (error) {
       console.log(error)
-      
+    } 
+  }
+  let ver={
+  }
+  const validaciones=()=>{
+    if(expresiones.nombre){
+      if (expresiones.nombre.test(nombreact)) {
+         errores[0]='false'
+        console.log('Input correcto',errores[0])
+        
+      }else{
+        errores[0]='true'
+        console.log('Input incorrecto',errores[0])
+
+      }
     }
-    
-      
+
   }
     return(
 
@@ -64,15 +82,17 @@ function Register() {
       autoComplete="off"
     >
       <div className='formulario'>
-        
+        <div className='grupoinput'>
         <TextField 
-          
           required
           
+          onBlur={validaciones}
           id="outlined-required"
           label="Nombres"
           onChange={(e)=>setnombre(e.target.value)}
         />
+        <p style={{ display: "none" }}>Error aqui</p>
+        </div>
         <TextField
           required
           id="outlined-required"
@@ -112,7 +132,6 @@ function Register() {
           onChange={(e)=>setcelular(e.target.value)}
         />
 
-        <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
           <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -123,15 +142,15 @@ function Register() {
           <MenuItem value="Punto fijo">Punto fijo</MenuItem>
           <MenuItem value="coordinador">coordinador</MenuItem>
         </Select>
-        <div className='direccion'>
-        <InputLabel id="demo-simple-select-label">Direccion</InputLabel>
+        
           <Select
+          label="Celula"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label="direccion"
           onChange={(e)=>setdireccion1(e.target.value)}
         >
-          <MenuItem value="Carrera">Carrera</MenuItem>
+          
+          <MenuItem value="Carrera" selected>Carrera</MenuItem>
           <MenuItem value="Calle">Calle</MenuItem>
           <MenuItem value="Avenida">Avenida</MenuItem>
           <MenuItem value="Diagonal">Diagonal</MenuItem>
@@ -172,10 +191,12 @@ function Register() {
           label="Interior o alguna especificacion"
           type="text"
         />
-        </div>
+        
       </div>
       
       <Stack className='botonenviar' direction="row" spacing={2}>
+      <Alert severity="error">Porfavor rellenar el formulario correctamente</Alert>
+      <br/>
       <Button   type="submit" variant="contained" endIcon={<SendIcon />}>
         Enviar
        </Button>

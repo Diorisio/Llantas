@@ -1,18 +1,51 @@
 .formulario{
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap:50px;
 }
+.css-13r4j3i .MuiTextField-root {
+    margin: 8px;
+    width: 28ch !important;
+}
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{
+    background: white;
+     width: 28ch
 
-.formulario div{
-
-    width: 30ch;
 }
 .botonenviar{
-    display: flex;
+    display: flex !important;
     justify-content: center; 
+    flex-direction: column !important;
+}
+.botonenviar button{
+    width: 10%;
+    margin-left: 46% !important;
+
+}
+.botonenviar div{
+    margin: 0 10%;
+    display: none;
+
+}
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+    background: white;
+    padding-right: 40px;
+
 }
 .persona{
     font-size: 70px !important;
     width: 103% !important;
+}
+.grupoinput{
+    position: relative;
+}
+.grupoinput svg{
+    position: absolute;
+    bottom: 40px;
+    opacity: 0;
+}
+.grupoinput p{
+    font-size: 16px;
+    color: red;
 }

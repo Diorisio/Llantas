@@ -7,15 +7,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
 import Grid from '@mui/material/Grid';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
+import { Button } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 import {
@@ -23,7 +20,7 @@ import {
   GoogleMap,
   Marker,
   Autocomplete,
-  DirectionsRenderer,
+  DirectionsRenderer
 } from '@react-google-maps/api';
 
 import sensorsdata from '../services/sensors-services';
@@ -57,15 +54,17 @@ const Item = styled(Paper)(({ theme }) => ({
 function Perfilconductor() {
     const [age, setAge] = useState('');
     const [co2act, setco2] = useState('');
+    const [longintudact, setlongintud] = useState('');
+    const [latitudact, setlatitud] = useState('');
 
     const handleChange = (event) => {
     setAge(event.target.value);
   };
-
+/*------------------- Consumir apis de sensores de gps------------- */
   useEffect(()=>{
 
     const datosco2 = async () => {
-        const co2Data = await sensorsdata();
+        const co2Data = await sensorsdata.sensorsco2data();
         if(co2Data.data) { 
             setco2(co2Data.data.result)
         }
@@ -74,32 +73,95 @@ function Perfilconductor() {
 
     datosco2();
    }, [co2act]);
+
+
+   useEffect(()=>{
+
+    const longintud = async () => {
+        const longintudData = await sensorsdata.longintuddata();
+        if(longintudData.data) { 
+          setlongintud(longintudData.data.result)
+        }
+        console.log("longitud",longintudData.data.result)
+    }
+
+    longintud();
+   }, []);
+
+   useEffect(()=>{
+
+    const latitud = async () => {
+        const latitudData = await sensorsdata.latituddata();
+        if(latitudData.data) { 
+          setlatitud(latitudData.data.result)
+        }
+        console.log("latitud",latitudData.data.result)
+    }
+
+    latitud();
+   }, []);
+   /*----------------------------------------------------------------------- */
    /* -----------------Google api------------------------------- */
 
-   const [directionsResponse, setDirectionsResponse] = useState(null)
+   
+  const originRef = useRef()
+  const destiantionRef = useRef()
+  
+  const [map, setMap] = useState(null)
+  const [directionsResponse, setDirectionsResponse] = useState(null)
+  const [distance, setDistance] = useState('')
+  const [duration, setDuration] = useState('')
+
 
    const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    
+    libraries: ['places'],
+
   })
-  const [map, setMap] = React.useState(null)
-
-
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
+  
 
   if (!isLoaded) {
     return <Skeleton/>
   }
-   
+
+
+    async function calculateRoute() {
+    try {
+      if (originRef.current.value === '' || destiantionRef.current.value === '') {
+        return
+      }
+      // eslint-disable-next-line no-undef
+      const directionsService = new google.maps.DirectionsService()
+      const results =  await directionsService.route({
+        origin: originRef.current.value,
+        destination: destiantionRef.current.value,
+        // eslint-disable-next-line no-undef
+        travelMode: google.maps.TravelMode.DRIVING,
+      })
+      
+      console.log(results)
+      setDirectionsResponse(results)
+      setDistance(results.routes[0].legs[0].distance.text)
+      setDuration(results.routes[0].legs[0].duration.text)
+      
+    } catch (error) {
+      console.log(error)
+      console.log(originRef.current.value)
+    }
+    
+  }
+
+
+  function clearRoute() {
+    setDirectionsResponse(null)
+    setDistance('')
+    setDuration('')
+    originRef.current.value = ''
+    destiantionRef.current.value = ''
+    window.location.reload();
+  }
+  
 
    /* ---------------------------- */
   
@@ -129,46 +191,47 @@ function Perfilconductor() {
           type="number"
         />
       </FormControl>
-    </div>
-    <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-    >
-      <IconButton sx={{ p: '10px' }} aria-label="menu">
-        <MenuIcon />
-      </IconButton>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Punto de origen"
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-        <DirectionsIcon />
-      </IconButton>
-    </Paper>
+    </div>  
+
     {/* ----------------google api maps------------------- */}
+
+      <Autocomplete>
+      <input ref={originRef} type="text" />
+      </Autocomplete>
+      <Autocomplete>
+      <input ref={destiantionRef} type="text" />
+      </Autocomplete>
+      
+    
+    <Button variant="contained" type='submit' onClick={calculateRoute}>Calcular ruta</Button>
+    <Button variant="contained" onClick={() => {map.panTo(center); map.setZoom(18)}}>
+    <LocationOnIcon></LocationOnIcon>
+    </Button>
+
+    <Button variant="contained" onClick={clearRoute}>
+    <DeleteIcon></DeleteIcon>
+    </Button>
+ 
 
     <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={15}
-        onLoad={onLoad}
-        onUnmount={onUnmount}>
-          
-
-        <></>
-        <Marker position={center} />
-          {directionsResponse && (
+        zoom={18}
+        onLoad={map => setMap(map)}
+        >
+          <></>
+        <Marker position={center}/>
+        
+        {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
-      </GoogleMap>
+          
+          
+      </GoogleMap> 
 
     {/* ---------------------------------------------------- */}
 
+   {/* ---------------------------sensor de gas ---------- */}
     <Grid container spacing={2}>
       {[darkTheme].map((theme, index) => (
         <Grid item xs={6} key={index}>
@@ -190,6 +253,7 @@ function Perfilconductor() {
         </Grid>
       ))}
     </Grid>
+    {/* ---------------------------------------------------------- */}
 
         </>
     )
