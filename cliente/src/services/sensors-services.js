@@ -15,9 +15,20 @@ const sensorsco2data=()=>{
     }
 
 }
+
+const sensorscodata=()=>{
+    try {
+        return axios.get(api_url+"sensor 2"+apikey)
+        
+    } catch (error) {
+        
+    }
+
+}
+
 const longintuddata=()=>{
     try {
-        return axios.get(api_url+"longitud"+apikey)
+        return axios.get(api_url+"latitud"+apikey)
         
     } catch (error) {
         
@@ -26,7 +37,7 @@ const longintuddata=()=>{
 }
 const latituddata=()=>{
     try {
-        return axios.get(api_url+"latitud"+apikey)
+        return axios.get(api_url+"longitud"+apikey)
         
     } catch (error) {
         
@@ -36,6 +47,7 @@ const latituddata=()=>{
 
 const sensorsdata = {
     sensorsco2data,
+    sensorscodata,
     longintuddata,
     latituddata
 }

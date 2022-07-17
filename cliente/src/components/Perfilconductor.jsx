@@ -35,11 +35,8 @@ const containerStyle = {
   height: '400px'
 };
 
-const center = {
 
-  lat:6.266826,
-  lng: -75.553810
-};
+
 
 /* ---------------------------------------------------- */
 
@@ -54,6 +51,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function Perfilconductor() {
     const [age, setAge] = useState('');
     const [co2act, setco2] = useState('');
+    const [coact, setco] = useState('');
     const [longintudact, setlongintud] = useState('');
     const [latitudact, setlatitud] = useState('');
 
@@ -61,6 +59,7 @@ function Perfilconductor() {
     setAge(event.target.value);
   };
 /*------------------- Consumir apis de sensores de gps------------- */
+
   useEffect(()=>{
 
     const datosco2 = async () => {
@@ -68,11 +67,26 @@ function Perfilconductor() {
         if(co2Data.data) { 
             setco2(co2Data.data.result)
         }
-        console.log(co2Data.data.result)
+        
     }
 
     datosco2();
    }, [co2act]);
+
+
+   useEffect(()=>{
+
+    const datosco = async () => {
+        const coData = await sensorsdata.sensorscodata();
+        if(coData.data) { 
+          setco(coData.data.result)
+        }
+        
+        
+    }
+
+    datosco();
+   }, [coact]);
 
 
    useEffect(()=>{
@@ -82,11 +96,11 @@ function Perfilconductor() {
         if(longintudData.data) { 
           setlongintud(longintudData.data.result)
         }
-        console.log("longitud",longintudData.data.result)
+        
     }
 
     longintud();
-   }, []);
+   }, [longintudact]);
 
    useEffect(()=>{
 
@@ -95,14 +109,20 @@ function Perfilconductor() {
         if(latitudData.data) { 
           setlatitud(latitudData.data.result)
         }
-        console.log("latitud",latitudData.data.result)
+        
     }
 
     latitud();
-   }, []);
+   }, [latitudact]);
    /*----------------------------------------------------------------------- */
    /* -----------------Google api------------------------------- */
+   
+   const center = {
 
+    lat:latitudact,
+    lng:longintudact
+  };
+  
    
   const originRef = useRef()
   const destiantionRef = useRef()
@@ -247,6 +267,29 @@ function Perfilconductor() {
             >
                 <Item key={co2act} elevation={co2act}>
                   {`CO2=${co2act}`}
+                </Item>
+            </Box>
+          </ThemeProvider>
+        </Grid>
+      ))}
+    </Grid>
+
+
+    <Grid container spacing={2}>
+      {[darkTheme].map((theme, index) => (
+        <Grid item xs={6} key={index}>
+          <ThemeProvider theme={theme}>
+            <Box
+              sx={{
+                p: 2,
+                bgcolor: 'background.default',
+                display: 'grid',
+                gridTemplateColumns: { md: '1fr 1fr' },
+                gap: 2,
+              }}
+            >
+                <Item key={coact} elevation={coact}>
+                  {`CO=${coact}`}
                 </Item>
             </Box>
           </ThemeProvider>
