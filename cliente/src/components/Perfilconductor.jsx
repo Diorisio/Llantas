@@ -15,6 +15,8 @@ import Skeleton from '@mui/material/Skeleton';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
+import Tablasensores from './Tablasensores';
+
 import {
   useJsApiLoader,
   GoogleMap,
@@ -114,11 +116,27 @@ function Perfilconductor() {
 
     latitud();
    }, [latitudact]);
+
+   useEffect(()=>{
+
+    const enviodatos = async () => {
+      try {
+        await sensorsdata.enviodatos(co2act,coact,longintudact,latitudact);
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+        
+        
+    }
+
+    enviodatos();
+   }, [latitudact]);
    /*----------------------------------------------------------------------- */
    /* -----------------Google api------------------------------- */
    
    const center = {
-
     lat:latitudact,
     lng:longintudact
   };
@@ -154,7 +172,7 @@ function Perfilconductor() {
       // eslint-disable-next-line no-undef
       const directionsService = new google.maps.DirectionsService()
       const results =  await directionsService.route({
-        origin: originRef.current.value,
+        origin: center,
         destination: destiantionRef.current.value,
         // eslint-disable-next-line no-undef
         travelMode: google.maps.TravelMode.DRIVING,
@@ -181,6 +199,8 @@ function Perfilconductor() {
     destiantionRef.current.value = ''
     window.location.reload();
   }
+  console.log("CO",coact)
+  console.log("CO2",co2act)
   
 
    /* ---------------------------- */
@@ -239,7 +259,8 @@ function Perfilconductor() {
         zoom={18}
         onLoad={map => setMap(map)}
         >
-          <></>
+          
+         <></>
         <Marker position={center}/>
         
         {directionsResponse && (
@@ -297,6 +318,12 @@ function Perfilconductor() {
       ))}
     </Grid>
     {/* ---------------------------------------------------------- */}
+    {/* --------------------tablas sensores--------------- */}
+     <Tablasensores></Tablasensores>
+ 
+
+
+    {/* -------------------------------------------------- */}
 
         </>
     )
