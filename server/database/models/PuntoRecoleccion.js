@@ -6,30 +6,28 @@
  * @returns Sequelize User model
  */
  module.exports = (sequelize, DataTypes) => {
-    const Sensors = sequelize.define('Sensors', {
+    const PuntoRecoleccion = sequelize.define('PuntoRecoleccion', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        latitud: {
-            type: DataTypes.FLOAT
+        tipollanta: {
+            type: DataTypes.STRING
         },
-        longitud: {
-            type: DataTypes.FLOAT
+        rin: {
+            type: DataTypes.INTEGER
         },
-        sensorCO: {
-            type: DataTypes.FLOAT
-        },
-        sensorCO2: {
-            type: DataTypes.FLOAT
+        cantidad: {
+            type: DataTypes.INTEGER
         }
+    
         
         
     }, {
-        tableName: 'sensors',
+        tableName: 'puntoRecoleccion',
         timestamps: true,
     });
 
-    return Sensors;
+    return PuntoRecoleccion;
 }

@@ -6,6 +6,7 @@ var logger = require('morgan');
 const Users = require('./routes/Users')
 const Admin = require('./routes/AdminRouter')
 const Sensor = require('./routes/SensorRouter')
+const Recolector = require('./routes/RecoleccionRouter')
 const db = require('./database/models');
 const { expressjwt: jwt } = require('express-jwt');
 var app = express();
@@ -13,7 +14,7 @@ var app = express();
 
 forceSync = async () => {
 
-  await db.sequelize.sync(/* {force: true} */);
+  await db.sequelize.sync(/* { alter: true } *//* {force: true} */);
   console.log("tabla creada")
 
 }
@@ -28,7 +29,9 @@ app.use(
   jwt({
     secret: "Y29udHJhc2XxYQ==",
     algorithms: ["HS256"],
-  }).unless({ path: ["/api/envioemail","/api/admin/login","/api/logeado","/api/admin/revisado","/api/guardandodatos","/api/enviodata"] })
+  }).unless({ path: ["/api/envioemail","/api/admin/login",
+  "/api/logeado","/api/admin/revisado","/api/guardandodatos",
+  "/api/enviodata","/api/Recolector/todasllantas","/api/Recolector/registrollantas"] })
 );
 
 
@@ -36,6 +39,7 @@ app.use(
 app.use('/api',Users)
 app.use('/api/admin',Admin)
 app.use('/api',Sensor)
+app.use('/api/Recolector',Recolector)
 forceSync()
 
 // catch 404 and forward to error handler

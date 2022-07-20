@@ -4,7 +4,8 @@ module.exports={
     "password": "",
     "database": "llantasdb",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "-05:00"
   },
   "test": {
     "username": "root",

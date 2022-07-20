@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 
 import { DataGrid } from '@mui/x-data-grid';
-import adminservices from '../services/admin-services';
+import adminservices from '../../services/admin-services';
 import { Button } from '@mui/material';
 
 const columns = [

@@ -15,7 +15,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
-import Tablasensores from './Tablasensores';
+import Tablasensores from '../components/Tablas/Tablasensores';
 
 import {
   useJsApiLoader,
@@ -126,17 +126,16 @@ function Perfilconductor() {
       } catch (error) {
         console.log(error)
         
-      }
-        
+      }  
         
     }
-
     enviodatos();
-   }, [latitudact]);
+   }, [co2act]);
    /*----------------------------------------------------------------------- */
    /* -----------------Google api------------------------------- */
    
    const center = {
+
     lat:latitudact,
     lng:longintudact
   };
@@ -149,6 +148,7 @@ function Perfilconductor() {
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
+  const [centerq, setcenter] = useState('')
 
 
    const { isLoaded } = useJsApiLoader({
@@ -178,14 +178,14 @@ function Perfilconductor() {
         travelMode: google.maps.TravelMode.DRIVING,
       })
       
-      console.log(results)
+      
       setDirectionsResponse(results)
       setDistance(results.routes[0].legs[0].distance.text)
       setDuration(results.routes[0].legs[0].duration.text)
       
     } catch (error) {
       console.log(error)
-      console.log(originRef.current.value)
+      
     }
     
   }
@@ -260,7 +260,7 @@ function Perfilconductor() {
         onLoad={map => setMap(map)}
         >
           
-         <></>
+        <></>
         <Marker position={center}/>
         
         {directionsResponse && (
@@ -319,7 +319,7 @@ function Perfilconductor() {
     </Grid>
     {/* ---------------------------------------------------------- */}
     {/* --------------------tablas sensores--------------- */}
-     <Tablasensores></Tablasensores>
+     {/* <Tablasensores></Tablasensores> */}
  
 
 

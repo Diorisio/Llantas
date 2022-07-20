@@ -4,7 +4,7 @@ import {Routes,Route} from "react-router-dom"
 import Register from "./Register"
 import Footer from "./Footer"
 import Cabecera from "./Cabecera"
-import Tablasdeaceptacion from "./Tablasdeaceptacion"
+import Tablasdeaceptacion from "./Tablas/Tablasdeaceptacion"
 import Login from "./Login"
 import LoginAdmin from "./LoginAdmin"
 import Inicio from "./Inicio";
