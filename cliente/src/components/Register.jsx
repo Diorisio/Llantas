@@ -135,21 +135,25 @@ function Register() {
           <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
+          displayEmpty
           onChange={(e)=>setcargo(e.target.value)}
           label="Cargo"
         >
+          <MenuItem disable defaultChecked>Cargo</MenuItem>
           <MenuItem value="Recolector">Recolector</MenuItem>
           <MenuItem value="Punto fijo">Punto fijo</MenuItem>
           <MenuItem value="coordinador">coordinador</MenuItem>
         </Select>
-        
+        <div>
+          <h2>Direccion</h2>
           <Select
           label="Celula"
           labelId="demo-simple-select-label"
+          displayEmpty
           id="demo-simple-select"
           onChange={(e)=>setdireccion1(e.target.value)}
         >
-          
+          <MenuItem disable defaultChecked>Direccion</MenuItem>
           <MenuItem value="Carrera" selected>Carrera</MenuItem>
           <MenuItem value="Calle">Calle</MenuItem>
           <MenuItem value="Avenida">Avenida</MenuItem>
@@ -159,7 +163,7 @@ function Register() {
         onChange={(e)=>setdireccion5(e.target.value)}
           id="outlined-number"
           label="Numero"
-          type="text"
+          type="number"
         />
         <TextField
         onChange={(e)=>setdireccion2(e.target.value)}
@@ -191,6 +195,7 @@ function Register() {
           label="Interior o alguna especificacion"
           type="text"
         />
+        </div>
         
       </div>
       

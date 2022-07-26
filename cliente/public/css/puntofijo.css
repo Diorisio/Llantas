@@ -1,4 +1,16 @@
-
-  #map {
-    height: 100%;
-  }
+.body-recolector{
+  margin: 0px 59px;
+}
+.body-llantas {
+  background: transparent !important;
+}
+.formllantas{
+  justify-content: space-between;
+    display: flex;
+    margin-bottom: 15px;
+}
+.body-recolector button{
+  width: 24%;
+  margin: auto;
+  margin-bottom: 10px;
+}

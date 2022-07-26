@@ -1,10 +1,18 @@
 import * as React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
+
 import { useState,useEffect } from 'react';
 
 import llantasdata from '../services/llanta-services';
+import Tablallantas from './Tablas/Tablallantas'
+import Barradenavegacion from './Barranavegacion';
+import Barralogin from './Barralogin';
 
 function Puntofijo() {
   const [llantasact, setllantas] = useState('');
@@ -30,42 +38,65 @@ function Puntofijo() {
       
     }
     
-
 }
-console.log("varoles",llantasact,rinact,numerollantasact)
+console.log(numerollantasact,rinact,llantasact)
+
     return(
-        <>
+        <div className='body-inicio'>
+         <Barralogin></Barralogin>
+        
         <h1>Datos del punto</h1>
         <h1>Datos de las llantas</h1>
-    <form >
-    <Autocomplete
-      disablePortal
-      id="combo-box-demo"
-      options={tipodellantas}
-      
-      sx={{ width: 300 }}
-      renderInput={(params) => <TextField onChange={(e)=>setllantas(e.target.value)} {...params} label="Tipo de llanta" />}
-    />
 
-    <Autocomplete
-      disablePortal
-      id="combo-box-demo"
-      options={Rines}
-      sx={{ width: 300 }}
-      getOptionLabel={(options) => typeof options === 'string'
-      || options instanceof String ? options : ""}
-      onChange={(e)=>setrin(e.target.value)}
-      
-      renderInput={(params) => <TextField  type="number" {...params} label="Rin" />}
-    />
-    <TextField id="filled-basic" type="number" onChange={(e)=>setnumerollantas(e.target.value)} label="Cantidad" variant="filled" />
-    <Button type="submit" onClick={registrollantas} variant="contained">Registrar llantas</Button>
-     <div id="map"></div>
-     </form>
+        
+      <FormControl className='body-llantas' fullWidth>
+        <div className='formllantas'>
+        <InputLabel className='tipo' id="demo-simple-select-label">Tipo de llantas</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={llantasact}
+          label="Age"
+          onChange={(e)=>setllantas(e.target.value)}
+        >
+          <MenuItem value={'Camion'}>Camion</MenuItem>
+          <MenuItem value={'Fuera de carretera'}>Fuera de carretera</MenuItem>
+          <MenuItem value={'Bicicleta'}>Bicicleta</MenuItem>
+        </Select>
+
+        
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={rinact}
+          displayEmpty
+          label="Age"
+          onChange={(e)=>setrin(e.target.value)}
+        >
+          <MenuItem value=''>Rin</MenuItem>
+          <MenuItem value={22.5}>22.5</MenuItem>
+          <MenuItem value={15}>15</MenuItem>
+          <MenuItem value={20.5}>20.5</MenuItem>
+        </Select>
+
+        <TextField 
+          required
+          id="outlined-required"
+          label="Cantidad"
+          type="number"
+          onChange={(e)=>setnumerollantas(e.target.value)}
+        />
+        </div>
+        
+        <Button type="submit" onClick={registrollantas} variant="contained">Registrar llantas</Button>
+
+      </FormControl>
+      <h2>Tablas de llantas</h2>
+
+      <Tablallantas></Tablallantas>
     
 
-
-        </>
+        </div>
     )
         
     
@@ -85,6 +116,11 @@ const Rines = [
     { label: 15 },
     { label: 20.5},
   ];
+
+
+
+
+  
 
   
 

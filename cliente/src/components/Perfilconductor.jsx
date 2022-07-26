@@ -16,13 +16,15 @@ import { Button } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 import Tablasensores from '../components/Tablas/Tablasensores';
+import Barralogin from './Barralogin'
 
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
   Autocomplete,
-  DirectionsRenderer
+  DirectionsRenderer,
+  InfoWindow
 } from '@react-google-maps/api';
 
 import sensorsdata from '../services/sensors-services';
@@ -32,13 +34,13 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 /* ------------------------google api------------------- */
 
-const containerStyle = {
-  width: '400px',
-  height: '400px'
-};
-
-
-
+const markers = [
+  {
+    id: 1,
+    name: "Punto inicial",
+    position: {lat: 6.336618900299072, lng: -75.56346130371094}
+  }
+]
 
 /* ---------------------------------------------------- */
 
@@ -56,7 +58,7 @@ function Perfilconductor() {
     const [coact, setco] = useState('');
     const [longintudact, setlongintud] = useState('');
     const [latitudact, setlatitud] = useState('');
-
+    /* {lat: 6.336618900299072, lng: -75.56346130371094} */
     const handleChange = (event) => {
     setAge(event.target.value);
   };
@@ -134,11 +136,10 @@ function Perfilconductor() {
    /*----------------------------------------------------------------------- */
    /* -----------------Google api------------------------------- */
    
-   const center = {
-
-    lat:latitudact,
-    lng:longintudact
-  };
+   const center = 
+    {lat: 6.336618900299072, lng: -75.56346130371094}
+    
+  
   
    
   const originRef = useRef()
@@ -148,7 +149,21 @@ function Perfilconductor() {
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
-  const [centerq, setcenter] = useState('')
+  const [activeMarker, setActiveMarker] = useState(null);
+
+  /* const handleOnLoad = (map) => {
+    const bounds = new google.maps.LatLngBounds();
+    markers.forEach(({ position }) => bounds.extend(position));
+    map.fitBounds(bounds);
+  }; */
+
+
+  const handleActiveMarker = (marker) => {
+    if (marker === activeMarker) {
+      return;
+    }
+    setActiveMarker(marker);
+  };
 
 
    const { isLoaded } = useJsApiLoader({
@@ -163,10 +178,18 @@ function Perfilconductor() {
     return <Skeleton/>
   }
 
+  const puntos=[
+               'Parque Explora, Carrera 52, Medellín, Antioquia, Colombia'
+  ]
+  
+    
+    
+  
+
 
     async function calculateRoute() {
     try {
-      if (originRef.current.value === '' || destiantionRef.current.value === '') {
+      if (destiantionRef.current.value === '') {
         return
       }
       // eslint-disable-next-line no-undef
@@ -200,13 +223,14 @@ function Perfilconductor() {
     window.location.reload();
   }
   console.log("CO",coact)
-  console.log("CO2",co2act)
+  console.log("CO2",Marker)
   
 
    /* ---------------------------- */
   
     return(
-        <>
+        <div className='body-inicio'>
+        <Barralogin></Barralogin>
     <div className='body-perfilconductor'>
       
       <FormControl variant="filled" sx={{ m: 1, minWidth: 170 }}>
@@ -235,10 +259,7 @@ function Perfilconductor() {
 
     {/* ----------------google api maps------------------- */}
 
-      <Autocomplete>
-      <input ref={originRef} type="text" />
-      </Autocomplete>
-      <Autocomplete>
+      <Autocomplete className='autocomplete'>
       <input ref={destiantionRef} type="text" />
       </Autocomplete>
       
@@ -254,14 +275,30 @@ function Perfilconductor() {
  
 
     <GoogleMap
-        mapContainerStyle={containerStyle}
         center={center}
         zoom={18}
-        onLoad={map => setMap(map)}
+        onLoad={map=>setMap(map)}
+        onClick={() => setActiveMarker(null)}
+        mapContainerStyle={{ width: "100%", height: "100vh" }}
         >
-          
-        <></>
-        <Marker position={center}/>
+
+         <></>
+        {markers.map(({ id, name, position }) => (
+        <Marker
+          key={id}
+          position={position}
+          onClick={() => handleActiveMarker(id)}
+        >
+          {activeMarker === id ? (
+            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+              <div>{name}</div>
+            </InfoWindow>
+          ) : null}
+        </Marker>
+        
+      ))}
+      
+        
         
         {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
@@ -317,15 +354,19 @@ function Perfilconductor() {
         </Grid>
       ))}
     </Grid>
+    <div className='coordenadas'>
+    <p>Latitud:{latitudact}</p>
+    <p>Longitud:{longintudact}</p>
+    </div>
     {/* ---------------------------------------------------------- */}
     {/* --------------------tablas sensores--------------- */}
-     {/* <Tablasensores></Tablasensores> */}
+     <Tablasensores></Tablasensores>
  
 
 
     {/* -------------------------------------------------- */}
 
-        </>
+        </div>
     )
     
 }

@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom"
 
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PersonIcon from '@mui/icons-material/Person';
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import StarBorderIcon from '@mui/icons-material/StarBorder'
+import Barradenavegacion from "./Barranavegacion";
+import Barralogin from "./Barralogin";
 
 function srcset(image, width, height, rows = 1, cols = 1) {
     return {
@@ -22,18 +21,7 @@ function Inicio() {
 
     return(
         <div className="body-inicio">
-        <div className="login-inicio">
-            <div>
-            <AccountCircleIcon></AccountCircleIcon>
-            <p>SICLOG</p>
-            </div>
-            <div className="entrada-login">
-            <PersonIcon></PersonIcon>
-            <Link className="enlacesgeneral" to="/login">Iniciar sesion</Link>
-            </div>
-           
-            
-        </div>
+        <Barralogin></Barralogin>
         <div className="slider-frame">
             <ul>
                 <li><img src="/images/slider1.jpg" alt="imagen 1" /></li>
@@ -42,13 +30,7 @@ function Inicio() {
                 <li><img src="/images/llanta_slider6.jpeg" alt="imagen 4" /></li>
             </ul>
         </div>
-        <nav className="barra-navegacion">
-            <Link className="enlacesgeneral" to="/">Inicio</Link>
-            <Link className="enlacesgeneral" to="/">Reportar llantas</Link>
-            <Link className="enlacesgeneral" to="/conductor">Transportista</Link>
-            <Link className="enlacesgeneral" to="/recolector">Recolector</Link>
-            <Link className="enlacesgeneral" to="/tabla">Dashboard</Link>
-        </nav>
+        <Barradenavegacion/>
         <ImageList
         className="listaimagenes"
       sx={{

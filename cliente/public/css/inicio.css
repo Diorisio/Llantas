@@ -71,6 +71,8 @@ h2 {
     display: flex;
     gap: 60px;
     border: 1px solid;
+	display: flex;
+    justify-content: space-between;
 	background-color: rgb(187, 197, 169);
 }
 

@@ -1,1 +1,11 @@
+.mapa div{
+    width: 100% !important;
 
+}
+.autocomplete input{
+    width: 30%;
+    padding: 1%;
+}
+.coordenadas{
+    background: white;
+}

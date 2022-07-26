@@ -1,12 +1,13 @@
 import axios from "axios"
 
-const apiurl="http://localhost:3400/api/recolector"
+const apiurl="http://localhost:3400/api/Recolector"
 
 const todallanta=()=>{
     try {
-        return axios.get(apiurl+"todasllantas")
+        return axios.get(apiurl+"/todasllantas")
 
     } catch (error) {
+        console.log(error)
         
     }
 }
@@ -14,7 +15,7 @@ const todallanta=()=>{
 
 const registrollanta=(tipollanta,rin,cantidad)=>{
     try {
-        return axios.post(apiurl+"registrollantas",{
+        return axios.post(apiurl+"/registrollantas",{
             tipollanta,
             rin,
             cantidad

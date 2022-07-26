@@ -14,7 +14,7 @@ var app = express();
 
 forceSync = async () => {
 
-  await db.sequelize.sync(/* { alter: true } *//* {force: true} */);
+  await db.sequelize.sync(/* { alter: true } */ /* {force:false} */);
   console.log("tabla creada")
 
 }
