@@ -36,7 +36,7 @@ const envioemail=async(req,res)=>{
         const { nombre,correo, numerocelular, numerofijo, cargo,contrasena,direccion } = req.body;
         const user = await User.create({ nombre,correo, numerocelular, numerofijo, cargo,contrasena,direccion });
 
-        res.json(users);
+        res.json('Usuario logeado');
         
     } catch (error) {
         console.log(error)
@@ -56,9 +56,10 @@ const login=async(req,res)=>{
             }
         });
         if (await user.validPassword(contrasena)) {
-            const token = jwt.sign({name:user.nombre,id:user.id}, 'Y29udHJhc2XxYQ==');
+            const token = jwt.sign({name:user.nombre,id:user.id}, process.env.SECRET_JWT);
             console.log('valido')
-            return res.json (token);
+            const decodificado=jwt.verify(token,process.env.SECRET_JWT)
+            return res.json ({decodificado,token});
             
         }else{
             return res.status(401).json('usuario/contraseña incorrecto')

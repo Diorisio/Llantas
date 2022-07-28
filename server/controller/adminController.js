@@ -12,7 +12,7 @@ const login=async(req,res)=>{
             }
         });
         if (await admin.validPassword(contrasena)) {
-            const token = jwt.sign({cargo:"Admin",name:admin.nombre,id:admin.id}, 'Y29udHJhc2XxYQ==');
+            const token = jwt.sign({cargo:"Admin",name:admin.nombre,id:admin.id}, process.env.SECRET_JWT);
             return res.json (token);
             
         }else{

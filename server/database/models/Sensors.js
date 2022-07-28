@@ -30,6 +30,13 @@
         tableName: 'sensors',
         timestamps: true,
     });
+    Sensors.associate = function (models) {
+
+        Sensors.belongsTo(models.User, {
+            as: "users",
+            foreignKey: "id_user"
+        });
+    }
 
     return Sensors;
 }

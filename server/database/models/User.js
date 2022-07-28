@@ -53,6 +53,13 @@ const bcrypt = require('bcryptjs');
     User.prototype.validPassword = async function (contrasena) {
         return await bcrypt.compare(contrasena, this.contrasena);
     }
+    
+    User.associate = function(models) {
+        User.hasMany(models.Sensors, { 
+            as: "sensors", 
+            foreignKey: "id_user"
+        })
+    }
 
     return User;
 }

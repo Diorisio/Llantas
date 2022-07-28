@@ -6,10 +6,10 @@ const {Sensors}=require('../database/models')
 
 const sensor=async (req,res)=>{
     try {
-        const {sensorCO,sensorCO2,latitud,longitud}=req.body;
+        const {sensorCO,sensorCO2,latitud,longitud,id_user}=req.body;
 
-     await Sensors.create({sensorCO,sensorCO2,latitud,longitud}) 
-      res.json("sensorCO");
+     await Sensors.create({sensorCO,sensorCO2,latitud,longitud,id_user}) 
+      res.json("Datos creado");
         
     } catch (error) {
         console.log(error)
@@ -18,7 +18,9 @@ const sensor=async (req,res)=>{
 }
 const enviodatos=async(req,res)=>{
     try {
-        const alldata=await Sensors.findAll({}) 
+        const alldata=await Sensors.findAll({
+            include: ['users']
+        }) 
         return res.json(alldata)
         
     } catch (error) {

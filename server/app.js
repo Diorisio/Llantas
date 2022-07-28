@@ -1,20 +1,27 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const Users = require('./routes/Users')
-const Admin = require('./routes/AdminRouter')
-const Sensor = require('./routes/SensorRouter')
-const Recolector = require('./routes/RecoleccionRouter')
 const db = require('./database/models');
 const { expressjwt: jwt } = require('express-jwt');
 var app = express();
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const Users = require('./routes/UsersRouter')
+const Admin = require('./routes/AdminRouter')
+const Sensor = require('./routes/SensorRouter')
+const Dashboard=require('./routes/DashboardRouter')
+const PuntoRecoleccion = require('./routes/PuntoRecoleccionRouter')
 
+
+
+/* Para el process.env */
+const dotenv = require('dotenv');
+dotenv.config();
+/* -------------------------- */
 
 forceSync = async () => {
 
-  await db.sequelize.sync(/* { alter: true } */ /* {force:false} */);
+  await db.sequelize.sync( /* { alter: true } */ /* {force:false} */);
   console.log("tabla creada")
 
 }
@@ -27,19 +34,18 @@ app.use(cookieParser());
 
 app.use(
   jwt({
-    secret: "Y29udHJhc2XxYQ==",
+    secret: process.env.SECRET_JWT ,
     algorithms: ["HS256"],
-  }).unless({ path: ["/api/envioemail","/api/admin/login",
-  "/api/logeado","/api/admin/revisado","/api/guardandodatos",
-  "/api/enviodata","/api/Recolector/todasllantas","/api/Recolector/registrollantas"] })
+  }).unless({ path: ["/api/envioemail","/api/admin/login","/api/logeado"] })
 );
 
 
 
 app.use('/api',Users)
 app.use('/api/admin',Admin)
+app.use('/api/dashboard',Dashboard)
 app.use('/api',Sensor)
-app.use('/api/Recolector',Recolector)
+app.use('/api/fijo',PuntoRecoleccion)
 forceSync()
 
 // catch 404 and forward to error handler
