@@ -29,9 +29,12 @@ const login=async(correo,contrasena)=>{
             contrasena
             
         })
-        console.log(token)
-        if (token.data) {
-            localStorage.setItem('user', JSON.stringify(token.data));
+        console.log(token.data.decodificado)
+        if (token.data.token) {
+            localStorage.setItem('token', JSON.stringify(token.data.token));
+            localStorage.setItem('nombreuser', JSON.stringify(token.data.decodificado.name));
+            localStorage.setItem('Cargo', JSON.stringify(token.data.decodificado.cargo));
+            localStorage.setItem('id', JSON.stringify(token.data.decodificado.id));
         }
         
     } catch (error) {

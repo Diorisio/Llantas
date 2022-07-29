@@ -15,6 +15,7 @@ import Pruebamaps from "./Pruebamaps"
 
 
 
+
 function App() {
     
 
@@ -25,12 +26,12 @@ function App() {
          <Routes>
              <Route path="/" element={<Inicio/>}/>
              <Route path="/registro" element={<Register/>}/>
-             <Route path="/Tabla" element={<Tablasdeaceptacion />}/>
              <Route path="/login" element={<Login />}/>
              <Route path="/adminlogin" element={<LoginAdmin />}/>
              <Route path="/conductor" element={<Perfilconductor />}/>
              <Route path="/recolector" element={<Puntofijo />}/>
              <Route path="/prueba" element={<Pruebamaps />}/>
+             <Route path="/tabla" element={<Tablasdeaceptacion />}/>
     
              
          </Routes>

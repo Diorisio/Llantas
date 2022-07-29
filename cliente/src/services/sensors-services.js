@@ -5,6 +5,7 @@ import axios from "axios"
 const api_url ="https://api.particle.io/v1/devices/e00fce68b4ef2c6c0f75144f/"
 const apikey="?access_token=73aac12607fe32528cb496467576968fff4d00ed"
 const apiurl="http://localhost:3400/api/"
+const token = localStorage.getItem("token");
 
 
 const sensorsco2data=()=>{
@@ -46,13 +47,18 @@ const latituddata=()=>{
 
 }
 
-const enviodatos=(sensorCO,sensorCO2,latitud,longitud)=>{
+const enviodatos=(sensorCO,sensorCO2,latitud,longitud,id_user)=>{
     try {
         return axios.post(apiurl+"guardandodatos",{
             latitud,
             longitud,
             sensorCO,
-            sensorCO2
+            sensorCO2,
+            id_user
+        },{
+            headers:{
+                "Authorization": "Bearer " + token.replaceAll('"', '')
+            }
         })
         
     } catch (error) {
@@ -61,7 +67,11 @@ const enviodatos=(sensorCO,sensorCO2,latitud,longitud)=>{
 }
 const recibirdata=()=>{
     try {
-        return axios.get(apiurl+"enviodata")
+        return axios.get(apiurl+"enviodata",{
+            headers:{
+                "Authorization": "Bearer " + token.replaceAll('"', '')
+            }
+        })
         
     } catch (error) {
         console.log(error)

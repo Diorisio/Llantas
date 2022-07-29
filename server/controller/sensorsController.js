@@ -1,5 +1,6 @@
 const axios =require ('axios');
 const {Sensors}=require('../database/models')
+const jwt= require("jsonwebtoken")
 
 
 
@@ -18,8 +19,10 @@ const sensor=async (req,res)=>{
 }
 const enviodatos=async(req,res)=>{
     try {
+        const token = req.headers.authorization.split(' ').pop()
+        const tokendata= jwt.verify(token,process.env.SECRET_JWT)
         const alldata=await Sensors.findAll({
-            include: ['users']
+            where:{id_user:tokendata.id}
         }) 
         return res.json(alldata)
         

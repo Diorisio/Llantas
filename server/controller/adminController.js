@@ -13,7 +13,8 @@ const login=async(req,res)=>{
         });
         if (await admin.validPassword(contrasena)) {
             const token = jwt.sign({cargo:"Admin",name:admin.nombre,id:admin.id}, process.env.SECRET_JWT);
-            return res.json (token);
+            const decodificado=jwt.verify(token,process.env.SECRET_JWT)
+            return res.json ({decodificado,token});
             
         }else{
             return res.status(401).json('Admin/contrasena invalida')
@@ -43,7 +44,9 @@ const register=async(req,res)=>{
 
 const allUser=async(req,res)=>{
     try {
-        const users = await User.findAll({});
+        const users = await User.findAll({where:{
+            Revisado:0
+        }});
         res.json(users);
         
     } catch (error) {
@@ -52,8 +55,20 @@ const allUser=async(req,res)=>{
     }
 }
 
+const aceptado=async(req,res)=>{
+    const {data}=req.body;
+    await User.update({
+        Revisado:1
+    },{
+        where:{id:data}
+    })
+    
+
+}
+
 module.exports={
     login,
     register,
-    allUser
+    allUser,
+    aceptado
 }

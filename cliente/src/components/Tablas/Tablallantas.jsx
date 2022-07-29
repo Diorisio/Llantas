@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
+
 import llantasdata from '../../services/llanta-services'
 
 const columns = [
@@ -25,15 +26,22 @@ export default function DataTable() {
 React.useEffect(()=>{
 
   const getAllUser = async () => {
+    try {
       const UserData = await llantasdata.todallanta();
+      
       if(UserData.data) { 
+        console.log("hola",UserData)
           setCurrentUser(UserData.data)
       }
       
+    } catch (error) {
+      console.log(error)
+      
+    }
   }
-
   getAllUser();
  }, []);
+
   return (
     <div style={{ height: 400, width: '100%',background:"white" }}>
       <DataGrid

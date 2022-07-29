@@ -6,6 +6,7 @@ const { expressjwt: jwt } = require('express-jwt');
 var app = express();
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors')
 const Users = require('./routes/UsersRouter')
 const Admin = require('./routes/AdminRouter')
 const Sensor = require('./routes/SensorRouter')
@@ -31,6 +32,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors())
 
 app.use(
   jwt({

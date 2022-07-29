@@ -56,8 +56,7 @@ const login=async(req,res)=>{
             }
         });
         if (await user.validPassword(contrasena)) {
-            const token = jwt.sign({name:user.nombre,id:user.id}, process.env.SECRET_JWT);
-            console.log('valido')
+            const token = jwt.sign({name:user.nombre,cargo:user.cargo,id:user.id}, process.env.SECRET_JWT);
             const decodificado=jwt.verify(token,process.env.SECRET_JWT)
             return res.json ({decodificado,token});
             
@@ -71,7 +70,24 @@ const login=async(req,res)=>{
     }
 
 }
+
+const infouser=async(req,res)=>{
+    try {
+        const token = req.headers.authorization.split(' ').pop()
+        const tokendata= jwt.verify(token,process.env.SECRET_JWT)
+        const userone=await User.findOne({
+            where:{id:tokendata.id}
+        })
+        res.json(userone)
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+
+}
 module.exports={
     envioemail,
-    login
+    login,
+    infouser
 }

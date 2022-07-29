@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
+import { Link } from "react-router-dom"
 
 
 import { DataGrid } from '@mui/x-data-grid';
 import adminservices from '../../services/admin-services';
 import { Button } from '@mui/material';
+import Barralogin from '../Barralogin';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -39,7 +42,8 @@ const columns = [
 
 function Tablasdeaceptacion() {
   const [currentUser, setCurrentUser] = useState([]);
-  const [aceptadoact, setaceptado] = useState('');
+  const [revisadoact, setrevisado] = useState('');
+  const navigate = useNavigate();
 
     useEffect(()=>{
 
@@ -54,13 +58,37 @@ function Tablasdeaceptacion() {
         getAllUser();
     }, []);
 
-    const revisado=()=>{
-      console.log(aceptadoact)
+    const revisado=async()=>{
+      await adminservices.aceptado(revisadoact);
+      navigate("/tabla");
+        window.location.reload();
     }
+    
  
+  /* Verificacion del admin */
+  const [currentAmin, setCurrentAmin] = useState("cargo");
 
+    
+    useEffect(()=>{
+
+        const getcargo =  () => {
+            if(localStorage.getItem('Cargo')){
+              setCurrentAmin(localStorage.getItem('Cargo'))
+            }
+        }
+
+        getcargo();
+    }, []);
+
+  /* -------------------- */
 
   return (
+    <>
+    <Barralogin></Barralogin>
+    {currentAmin.replaceAll('"', '')!=='Admin'?
+
+    <Link className="enlacesgeneral" to="/tabla">Iniciar sesion admin</Link>
+    :
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         className='tablaaceptacion'
@@ -69,7 +97,10 @@ function Tablasdeaceptacion() {
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
-        onChange={(e)=>setaceptado(e.target.value)}
+        onSelectionModelChange={(data)=>{
+          setrevisado(data)
+        }}
+        
         value={currentUser.map(usuario => usuario.id)}
 
       />
@@ -77,6 +108,8 @@ function Tablasdeaceptacion() {
         Enviar
        </Button>
     </div>
+}
+    </>
   );
 }
 export default Tablasdeaceptacion

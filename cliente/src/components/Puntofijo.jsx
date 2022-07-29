@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
+
 import { useState,useEffect } from 'react';
 
 import llantasdata from '../services/llanta-services';
@@ -24,15 +25,8 @@ function Puntofijo() {
     try {
       e.preventDefault();
     
-     const errores=await llantasdata.registrollanta(llantasact,rinact,numerollantasact) 
-     console.log("registrado")
-    /* if(errores){
-      seterror(errores)
-
-    }else(
+     await llantasdata.registrollanta(llantasact,rinact,numerollantasact) 
     
-    ) */
-    /* navigate("/") */
     } catch (error) {
       console.log(error)
       
@@ -45,7 +39,8 @@ console.log(numerollantasact,rinact,llantasact)
         <div className='body-inicio'>
          <Barralogin></Barralogin>
         
-        <h1>Datos del punto</h1>
+        <h2>Datos del punto</h2>
+        <p>{localStorage.getItem('nombreuser').replaceAll('"', '')}</p>
         <h1>Datos de las llantas</h1>
 
         
