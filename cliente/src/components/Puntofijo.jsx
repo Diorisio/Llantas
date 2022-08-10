@@ -25,7 +25,8 @@ function Puntofijo() {
     try {
       e.preventDefault();
     
-     await llantasdata.registrollanta(llantasact,rinact,numerollantasact) 
+     await llantasdata.registrollanta(llantasact,rinact,numerollantasact,localStorage.getItem('id')) 
+     window.location.reload();
     
     } catch (error) {
       console.log(error)
@@ -33,7 +34,6 @@ function Puntofijo() {
     }
     
 }
-console.log(numerollantasact,rinact,llantasact)
 
     return(
         <div className='body-inicio'>

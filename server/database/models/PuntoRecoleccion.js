@@ -28,6 +28,13 @@
         tableName: 'puntoRecoleccion',
         timestamps: true,
     });
+    PuntoRecoleccion.associate = function (models) {
+
+        PuntoRecoleccion.belongsTo(models.User, {
+            as: "users",
+            foreignKey: "id_user"
+        });
+    }
 
     return PuntoRecoleccion;
 }

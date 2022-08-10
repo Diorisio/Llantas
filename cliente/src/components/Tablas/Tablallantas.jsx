@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material';
 
 
 import llantasdata from '../../services/llanta-services'
@@ -21,6 +22,21 @@ const columns = [
 export default function DataTable() {
 
   const [currentUser, setCurrentUser] = React.useState([]);
+  const [actregistro, setregistro] = React.useState([]);
+
+
+  const registro=async(e)=>{
+    try {
+      e.preventDefault();
+    
+     await llantasdata.borrarllantas(actregistro) 
+     window.location.reload();
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
   
 
 React.useEffect(()=>{
@@ -30,7 +46,6 @@ React.useEffect(()=>{
       const UserData = await llantasdata.todallanta();
       
       if(UserData.data) { 
-        console.log("hola",UserData)
           setCurrentUser(UserData.data)
       }
       
@@ -41,8 +56,10 @@ React.useEffect(()=>{
   }
   getAllUser();
  }, []);
+ 
 
   return (
+    <>
     <div style={{ height: 400, width: '100%',background:"white" }}>
       <DataGrid
         rows={currentUser.map(usuario => usuario)}
@@ -50,7 +67,13 @@ React.useEffect(()=>{
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        onSelectionModelChange={(data)=>{
+          setregistro(data)
+        }}
       />
     </div>
+    <Button variant="contained" onClick={registro} type='submit'>Llantas recogidas</Button>
+
+    </>
   );
 }

@@ -28,6 +28,7 @@ import {
 } from '@react-google-maps/api';
 
 import sensorsdata from '../services/sensors-services';
+import transportista from '../services/transportista-services';
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 const lightTheme = createTheme({ palette: { mode: 'light' } });
@@ -53,15 +54,35 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 function Perfilconductor() {
-    const [age, setAge] = useState('');
     const [co2act, setco2] = useState('');
     const [coact, setco] = useState('');
     const [longintudact, setlongintud] = useState('');
     const [latitudact, setlatitud] = useState('');
+    const [actconductor, setconductor] = useState('');
+    const [actllantas, setllantas] = useState('');
+    const [actorigen, setorigen] = useState('null');
+    const [actdestino, setdestino] = useState('null');
     /* {lat: 6.336618900299072, lng: -75.56346130371094} */
     const handleChange = (event) => {
-    setAge(event.target.value);
+    setconductor(event.target.value);
   };
+
+  /* -----------------------apis para el registro de la info del conductor */
+
+       const register=async(e)=>{
+        try {
+          e.preventDefault();
+        
+         await transportista.registro(actconductor,actllantas,actorigen,actdestino,localStorage.getItem('id')) 
+        
+        } catch (error) {
+          console.log(error)
+       }
+      }
+
+   
+
+  /* --------------------------------------------------------------------- */
 /*------------------- Consumir apis de sensores de gps------------- */
 
   useEffect(()=>{
@@ -85,8 +106,6 @@ function Perfilconductor() {
         if(coData.data) { 
           setco(coData.data.result)
         }
-        
-        
     }
 
     datosco();
@@ -134,7 +153,7 @@ function Perfilconductor() {
     enviodatos();
    }, [co2act]);
    /*----------------------------------------------------------------------- */
-   /* -----------------Google api------------------------------- */
+   /* -----------------funciones Google api------------------------------- */
    
    const center = 
     {lat: 6.336618900299072, lng: -75.56346130371094}
@@ -147,15 +166,8 @@ function Perfilconductor() {
   
   const [map, setMap] = useState(null)
   const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
   const [activeMarker, setActiveMarker] = useState(null);
-
-  /* const handleOnLoad = (map) => {
-    const bounds = new google.maps.LatLngBounds();
-    markers.forEach(({ position }) => bounds.extend(position));
-    map.fitBounds(bounds);
-  }; */
+  
 
 
   const handleActiveMarker = (marker) => {
@@ -178,15 +190,6 @@ function Perfilconductor() {
     return <Skeleton/>
   }
 
-  const puntos=[
-               'Parque Explora, Carrera 52, Medellín, Antioquia, Colombia'
-  ]
-  
-    
-    
-  
-
-
     async function calculateRoute() {
     try {
       if (destiantionRef.current.value === '') {
@@ -203,8 +206,9 @@ function Perfilconductor() {
       
       
       setDirectionsResponse(results)
-      setDistance(results.routes[0].legs[0].distance.text)
-      setDuration(results.routes[0].legs[0].duration.text)
+      setorigen(directionsResponse.routes[0].legs[0].start_address)
+      setdestino(directionsResponse.routes[0].legs[0].end_address)
+      console.log(actdestino)
       
     } catch (error) {
       console.log(error)
@@ -216,16 +220,12 @@ function Perfilconductor() {
 
   function clearRoute() {
     setDirectionsResponse(null)
-    setDistance('')
-    setDuration('')
     originRef.current.value = ''
     destiantionRef.current.value = ''
     window.location.reload();
   }
-  console.log("CO",coact)
-  console.log("CO2",Marker)
-  
 
+  
    /* ---------------------------- */
   
     return(
@@ -238,8 +238,8 @@ function Perfilconductor() {
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
-          value={age}
-          onChange={handleChange}
+          value={actconductor}
+          onChange={(e)=>setconductor(e.target.value)}
         >
           <MenuItem value="">
             <em>None</em>
@@ -253,11 +253,12 @@ function Perfilconductor() {
           id="outlined-number"
           label="Capacidad"
           type="number"
+          onChange={(e)=>setllantas(e.target.value)}
         />
       </FormControl>
     </div>  
 
-    {/* ----------------google api maps------------------- */}
+    {/* ---------------- app google api maps------------------- */}
 
       <Autocomplete className='autocomplete'>
       <input ref={destiantionRef} type="text" />
@@ -272,6 +273,7 @@ function Perfilconductor() {
     <Button variant="contained" onClick={clearRoute}>
     <DeleteIcon></DeleteIcon>
     </Button>
+    <Button variant="contained" onClick={register} type='submit'>Iniciar ruta</Button>
  
     
     <GoogleMap
@@ -282,7 +284,7 @@ function Perfilconductor() {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         >
 
-         <></>
+         
         {markers.map(({ id, name, position }) => (
         <Marker
           key={id}

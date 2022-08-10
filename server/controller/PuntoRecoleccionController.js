@@ -29,7 +29,24 @@ const registro=async(req,res)=>{
 
     
 }
+
+const llantasrecogidas=async(req,res)=>{
+    try {
+        const{data}=req.body
+        await PuntoRecoleccion.destroy({    
+            where:{id:data}
+        })
+        return res.json("eliminado con id "+data)
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+
+
+}
 module.exports={
     registro,
-    mostrardata
+    mostrardata,
+    llantasrecogidas
 }

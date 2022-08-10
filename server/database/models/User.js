@@ -13,10 +13,13 @@ const bcrypt = require('bcryptjs');
             primaryKey: true
         },
         nombre: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         correo: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
         },
         numerocelular: {
             type: DataTypes.BIGINT
@@ -25,13 +28,20 @@ const bcrypt = require('bcryptjs');
             type: DataTypes.BIGINT
         },
         cargo: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         contrasena: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         direccion: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        id_boron:{
+            type: DataTypes.BOOLEAN,
+            unique: true
         },
         Revisado: {
             type: DataTypes.BOOLEAN,

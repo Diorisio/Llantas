@@ -4,7 +4,6 @@ const apiurl="http://localhost:3400/api/fijo"
 const token = localStorage.getItem("token");
 
 const todallanta=()=>{
-         console.log(token)
 
         return axios.get(apiurl+"/todasllantas",{
             headers:{
@@ -16,13 +15,14 @@ const todallanta=()=>{
 }
 
 
-const registrollanta=(tipollanta,rin,cantidad)=>{
+const registrollanta=(tipollanta,rin,cantidad,id_user)=>{
     
         return axios.post(apiurl+"/registrollantas",
         {
             tipollanta,
             rin,
-            cantidad
+            cantidad,
+            id_user
 
         },{
             headers:{
@@ -32,9 +32,25 @@ const registrollanta=(tipollanta,rin,cantidad)=>{
         
     
 }
+const borrarllantas=(data)=>{
+    console.log(data)
+    return axios.post(apiurl+"/borrarllantas",
+        {
+            data
+
+        },
+        {
+            headers:{
+                "Authorization": "Bearer " + token.replaceAll('"', '')
+            }
+        })  
+
+
+}
 
 const llantasdata = {
     todallanta,
-    registrollanta
+    registrollanta,
+    borrarllantas
 }
 export default llantasdata

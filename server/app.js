@@ -12,6 +12,7 @@ const Admin = require('./routes/AdminRouter')
 const Sensor = require('./routes/SensorRouter')
 const Dashboard=require('./routes/DashboardRouter')
 const PuntoRecoleccion = require('./routes/PuntoRecoleccionRouter')
+const Transportista = require('./routes/TransportistaRouter')
 
 
 
@@ -22,7 +23,7 @@ dotenv.config();
 
 forceSync = async () => {
 
-  await db.sequelize.sync( /* { alter: true } */ /* {force:false} */);
+  await db.sequelize.sync( /* { alter: true } */ /* {force:true} */);
   console.log("tabla creada")
 
 }
@@ -48,6 +49,7 @@ app.use('/api/admin',Admin)
 app.use('/api/dashboard',Dashboard)
 app.use('/api',Sensor)
 app.use('/api/fijo',PuntoRecoleccion)
+app.use('/api/transportista',Transportista)
 forceSync()
 
 // catch 404 and forward to error handler

@@ -29,6 +29,7 @@
     }, {
         tableName: 'sensors',
         timestamps: true,
+        
     });
     Sensors.associate = function (models) {
 
