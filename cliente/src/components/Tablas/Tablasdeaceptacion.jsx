@@ -5,13 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"
 
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridActionsCellItem  } from '@mui/x-data-grid';
+import EditIcon from '@mui/icons-material/Edit';
+
 import adminservices from '../../services/admin-services';
 import { Button } from '@mui/material';
 import Barralogin from '../Barralogin';
 
+
+const updaterow=(e)=>{
+  console.log(e)
+      
+
+}
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
   { field: 'nombre', headerName: 'Nombres', width: 130 },
   {
     field: 'correo',
@@ -37,12 +44,29 @@ const columns = [
     field: 'direccion',
     headerName: 'Direccion',
     width: 160,
+  },
+  {
+    field: 'id_boron',
+    headerName: 'Id del boron',
+    width: 160,
+    editable:true
+  },
+  {
+    field: 'actions',
+    type: 'actions',
+    width: 80,
+    getActions: (params) => [
+      <GridActionsCellItem
+        icon={<EditIcon />}
+      />
+    ],
   }
 ];
 
 function Tablasdeaceptacion() {
   const [currentUser, setCurrentUser] = useState([]);
   const [revisadoact, setrevisado] = useState('');
+  const [actboron, setboron] = useState('');
   const navigate = useNavigate();
 
     useEffect(()=>{
@@ -59,9 +83,9 @@ function Tablasdeaceptacion() {
     }, []);
 
     const revisado=async()=>{
-      await adminservices.aceptado(revisadoact);
-      navigate("/tabla");
-        window.location.reload();
+      await adminservices.aceptado(revisadoact,actboron);
+      navigate("/dashboard/tabla");
+      window.location.reload();
     }
     
  
@@ -82,12 +106,21 @@ function Tablasdeaceptacion() {
 
   /* -------------------- */
 
+  const updaterow=(e)=>{
+    setboron(e.value)
+
+  }
+  console.log(actboron)
+
   return (
     <>
     <Barralogin></Barralogin>
     {currentAmin.replaceAll('"', '')!=='Admin'?
-
-    <Link className="enlacesgeneral" to="/tabla">Iniciar sesion admin</Link>
+    <>
+    <h2>Parece que aun no has iniciado sesion</h2>
+    <Button className='centrar' variant="contained">
+      <Link  className="enlacesgeneral" to="/adminlogin">Iniciar sesion admin</Link></Button>
+    </>
     :
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -100,8 +133,8 @@ function Tablasdeaceptacion() {
         onSelectionModelChange={(data)=>{
           setrevisado(data)
         }}
-        
         value={currentUser.map(usuario => usuario.id)}
+        onCellEditCommit={updaterow}
 
       />
       <Button   onClick={revisado} type="submit" variant="contained" >

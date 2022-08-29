@@ -37,9 +37,9 @@ function Barradenavegacion(){
             }
 
             {currentUser.replaceAll('"', '')=="Admin"?
-            <Link className="enlacesgeneral" to="/tabla">Dashboard</Link>
+            <Link className="enlacesgeneral" to="/Dashboard">Dashboard</Link>
             :
-            <Link className="enlacesgeneral" to="/">Dashboard</Link>
+            <Link className="enlacesgeneral" to="/Dashboard/tabla">Dashboard</Link>
             }
             
             

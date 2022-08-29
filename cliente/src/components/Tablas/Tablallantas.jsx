@@ -6,18 +6,29 @@ import { Button } from '@mui/material';
 import llantasdata from '../../services/llanta-services'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  
   { field: 'tipollanta', headerName: 'Tipo de llanta', width: 130 },
-  { field: 'rin', headerName: 'Rin', width: 130 },
+  { field: 'rin', headerName: 'Rin', width: 50 },
   {
     field: 'cantidad',
     headerName: 'Cantidad',
     type: 'number',
-    width: 90,
-  }
+    width: 110,
+    editable:true
+  },
+  { field: 'updatedAt', headerName: 'fecha de registro', width: 250 },
 ];
 
-
+function formatDate(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // la hora  '0' debe ser '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return (date.getDate()) + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + "  " + strTime;
+}
 
 export default function DataTable() {
 
@@ -46,7 +57,10 @@ React.useEffect(()=>{
       const UserData = await llantasdata.todallanta();
       
       if(UserData.data) { 
-          setCurrentUser(UserData.data)
+         const datos=UserData.data
+         datos.map(u=>u.updatedAt=formatDate(new Date(u.updatedAt)))
+
+          setCurrentUser(datos)
       }
       
     } catch (error) {
@@ -56,6 +70,26 @@ React.useEffect(()=>{
   }
   getAllUser();
  }, []);
+
+ const updaterow=async(e)=>{
+    
+    if (e.value<e.formattedValue) {
+
+      await llantasdata.updatellanta(e.id,e.value);
+      
+
+      const llanta=e.formattedValue-e.value
+      await llantasdata.registrollanta(e.row.tipollanta,e.row.rin,llanta,e.row.id_user)
+      window.location.reload();
+
+      
+    }else{
+      await llantasdata.updatellanta(e.id,e.value);
+      
+      window.location.reload();
+    }
+
+ }
  
 
   return (
@@ -70,6 +104,8 @@ React.useEffect(()=>{
         onSelectionModelChange={(data)=>{
           setregistro(data)
         }}
+        onCellEditCommit={updaterow}
+        
       />
     </div>
     <Button variant="contained" onClick={registro} type='submit'>Llantas recogidas</Button>

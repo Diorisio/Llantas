@@ -2,10 +2,11 @@
 import axios from "axios"
 
 
-const api_url ="https://api.particle.io/v1/devices/e00fce68b4ef2c6c0f75144f/"
+const api_url =`https://api.particle.io/v1/devices/${localStorage.getItem('id_boron').replaceAll('"', '')}/`
 const apikey="?access_token=73aac12607fe32528cb496467576968fff4d00ed"
 const apiurl="http://localhost:3400/api/"
 const token = localStorage.getItem("token");
+
 
 
 const sensorsco2data=()=>{

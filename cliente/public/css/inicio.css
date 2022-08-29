@@ -7,36 +7,12 @@ body{
 	margin: 0px 250px;
 	
 }
-.login-inicio{
-	display: flex;
-	justify-content: space-between;
-	border: 3px double black;
-	background-color: rgb(187, 197, 169);
 
-}
-.login-inicio div{
-	display: flex;
-	gap: 10px;
-}
-.login-inicio div svg{
-	font-size: 47px;
-}
-.login-inicio p{
-	display: flex;
-    align-items: center;
-	
-}
-.entrada-login{
-	margin-right: 13px;
-}
-.entrada-login a{
-	display: flex;
-    align-items: center;
-}
 h2 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 30px;
     padding-top: 50px;
+    margin-bottom: 11px;
 }
 
 .slider-frame {
@@ -65,16 +41,7 @@ h2 {
     object-fit: cover;
 }
 
-.barra-navegacion{
-	padding: 15px;
-    margin-left: 0 68px;
-    display: flex;
-    gap: 60px;
-    border: 1px solid;
-	display: flex;
-    justify-content: space-between;
-	background-color: rgb(187, 197, 169);
-}
+
 
 @keyframes slide {
 	0% {margin-left: 0;}
@@ -92,6 +59,20 @@ h2 {
 
 .listaimagenes{
 	width: 100% !important;
+}
+@media (max-width: 1035px) {
+	.body-inicio{
+		margin: 0 160px;
+		
+	}
+}
+
+@media (max-width:890px) {
+	.body-inicio{
+		margin: 0;
+		
+	}
+
 }
 
 

@@ -8,17 +8,15 @@ import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Alert from '@mui/material/Alert';
 
-import loginservices from '../services/login-services'
+import loginservices from '../services/user-services'
 
-const expresiones={
+/* const expresiones={
   nombre:/^[a-zA-Z\_\-]{4,16}$/,
-}
+} */
 const errores=['false','false','false','false','false','false','false']
 
 
@@ -54,7 +52,7 @@ function Register() {
   }
   let ver={
   }
-  const validaciones=()=>{
+  /* const validaciones=()=>{
     if(expresiones.nombre){
       if (expresiones.nombre.test(nombreact)) {
          errores[0]='false'
@@ -67,7 +65,7 @@ function Register() {
       }
     }
 
-  }
+  } */
     return(
 
     <>
@@ -86,7 +84,7 @@ function Register() {
         <TextField 
           required
           
-          onBlur={validaciones}
+          /* onBlur={validaciones} */
           id="outlined-required"
           label="Nombres"
           onChange={(e)=>setnombre(e.target.value)}

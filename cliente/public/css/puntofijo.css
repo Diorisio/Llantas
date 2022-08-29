@@ -14,3 +14,18 @@
   margin: auto;
   margin-bottom: 10px;
 }
+.info-fijo{
+    background: linear-gradient(255deg, rgba(107,104,144,70%) 0%, rgba(126,118,118,87%) 61%, rgba(90,113,111,100%) 100%);
+    
+    border: 1px solid black;
+
+}
+.info-fijo h3{
+  text-align: center;
+    margin: 10px;
+
+}
+.info-fijo p{
+  margin-bottom: 6px;
+  margin-left: 6px;
+}

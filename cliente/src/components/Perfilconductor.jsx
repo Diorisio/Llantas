@@ -31,7 +31,6 @@ import sensorsdata from '../services/sensors-services';
 import transportista from '../services/transportista-services';
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
-const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 /* ------------------------google api------------------- */
 
@@ -72,6 +71,7 @@ function Perfilconductor() {
        const register=async(e)=>{
         try {
           e.preventDefault();
+          
         
          await transportista.registro(actconductor,actllantas,actorigen,actdestino,localStorage.getItem('id')) 
         
@@ -190,7 +190,7 @@ function Perfilconductor() {
     return <Skeleton/>
   }
 
-    async function calculateRoute() {
+  async function calculateRoute() {
     try {
       if (destiantionRef.current.value === '') {
         return
@@ -208,7 +208,7 @@ function Perfilconductor() {
       setDirectionsResponse(results)
       setorigen(directionsResponse.routes[0].legs[0].start_address)
       setdestino(directionsResponse.routes[0].legs[0].end_address)
-      console.log(actdestino)
+      console.log(actorigen)
       
     } catch (error) {
       console.log(error)

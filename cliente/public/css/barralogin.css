@@ -1,0 +1,35 @@
+.login-inicio{
+	display: flex;
+	justify-content: space-between;
+	border: 3px double black;
+	background-color: rgb(187, 197, 169);
+
+}
+.login-inicio div{
+	display: flex;
+	gap: 10px;
+}
+.login-inicio div svg{
+	font-size: 47px;
+}
+.login-inicio p{
+	display: flex;
+    align-items: center;
+	
+}
+.entrada-login{
+	margin-right: 13px;
+}
+.entrada-login a{
+	display: flex;
+    align-items: center;
+}
+
+
+@media (max-width: 731px) {
+    /* .celular{
+        display: none !important;
+    } */
+    
+    
+}

@@ -19,7 +19,7 @@ const envioemail=async(req,res)=>{
             subject:"En espera de aceptación",
             html:`
             <b>Enlace para la aceptacion del nuevo integrante</b>
-            <a href="http://localhost:3000/Tabla">Informacion</a>
+            <a href="http://localhost:3000/dashboard/Tabla">Informacion</a>
             `
         }
       
@@ -27,7 +27,7 @@ const envioemail=async(req,res)=>{
             if (error) {
                 console.log(error)
             } else {
-                console.log("Email Sent: " + info.res)
+                console.log("Correo enviado: " + info.res)
             }
             
         })
@@ -36,7 +36,7 @@ const envioemail=async(req,res)=>{
         const { nombre,correo, numerocelular, numerofijo, cargo,contrasena,direccion } = req.body;
         const user = await User.create({ nombre,correo, numerocelular, numerofijo, cargo,contrasena,direccion });
 
-        res.json('Usuario logeado');
+        res.json('Usuario Registrado');
         
     } catch (error) {
         console.log(error)
@@ -56,7 +56,7 @@ const login=async(req,res)=>{
             }
         });
         if (await user.validPassword(contrasena)) {
-            const token = jwt.sign({name:user.nombre,cargo:user.cargo,id:user.id}, process.env.SECRET_JWT);
+            const token = jwt.sign({name:user.nombre,cargo:user.cargo,id:user.id,id_boron:user.id_boron}, process.env.SECRET_JWT);
             const decodificado=jwt.verify(token,process.env.SECRET_JWT)
             return res.json ({decodificado,token});
             
@@ -76,7 +76,8 @@ const infouser=async(req,res)=>{
         const token = req.headers.authorization.split(' ').pop()
         const tokendata= jwt.verify(token,process.env.SECRET_JWT)
         const userone=await User.findOne({
-            where:{id:tokendata.id}
+            where:{id:tokendata.id},
+            attributes: ['direccion','nombre','numerocelular','numerofijo']
         })
         res.json(userone)
         

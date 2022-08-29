@@ -40,7 +40,7 @@ const bcrypt = require('bcryptjs');
             allowNull: false
         },
         id_boron:{
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.STRING,
             unique: true
         },
         Revisado: {

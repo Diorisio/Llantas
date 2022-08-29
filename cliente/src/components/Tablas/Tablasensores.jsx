@@ -6,7 +6,7 @@ import sensorsdata from '../../services/sensors-services'
 
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  
   { field: 'latitud', headerName: 'Latitud', width: 130 },
   { field: 'longitud', headerName: 'Longitud', width: 130 },
   {

@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import Barradenavegacion from "./Barranavegacion";
 import Barralogin from "./Barralogin";
+import Barranavegacionres from './Barranavegacionres';
 
 function srcset(image, width, height, rows = 1, cols = 1) {
     return {
@@ -31,6 +32,7 @@ function Inicio() {
             </ul>
         </div>
         <Barradenavegacion/>
+        <Barranavegacionres></Barranavegacionres>
         <ImageList
         className="listaimagenes"
       sx={{

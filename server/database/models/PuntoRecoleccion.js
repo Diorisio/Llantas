@@ -20,6 +20,10 @@
         },
         cantidad: {
             type: DataTypes.INTEGER
+        },
+        estado: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
         }
     
         

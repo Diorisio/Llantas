@@ -11,11 +11,11 @@ function Barralogin() {
     const navigate = useNavigate();
     
     const logout=()=>{
-        console.log('hola')
         localStorage.removeItem("nombreuser");
         localStorage.removeItem("token");
         localStorage.removeItem("Cargo");
         localStorage.removeItem("id");
+        localStorage.removeItem("id_boron");
         navigate("/");
         window.location.reload();
     }
@@ -33,18 +33,19 @@ function Barralogin() {
     
     return(
         <div className="login-inicio">
-            <div>
+            <div className="siclog">
             <AccountCircleIcon></AccountCircleIcon>
-            <p>SICLOG</p>
+            <p className="celular">SICLOG</p>
             </div>
             <div className="entrada-login">
             <PersonIcon></PersonIcon>
+            
             {localStorage.getItem('token')?
-            <Link  onClick={logout} className="enlacesgeneral" to="/">Cerrar sesion</Link>
+            <Link  onClick={logout} className="enlacesgeneral celular" to="/">Cerrar sesion</Link>
             :
-            <Link className="enlacesgeneral" to="/login">Iniciar sesion</Link>
+            <Link className="enlacesgeneral celular" to="/login">Iniciar sesion</Link>
             }
-
+            
             </div>
            
             

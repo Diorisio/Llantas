@@ -16,6 +16,7 @@ const todallanta=()=>{
 
 
 const registrollanta=(tipollanta,rin,cantidad,id_user)=>{
+    console.log(id_user)
     
         return axios.post(apiurl+"/registrollantas",
         {
@@ -33,7 +34,7 @@ const registrollanta=(tipollanta,rin,cantidad,id_user)=>{
     
 }
 const borrarllantas=(data)=>{
-    console.log(data)
+    
     return axios.post(apiurl+"/borrarllantas",
         {
             data
@@ -47,10 +48,25 @@ const borrarllantas=(data)=>{
 
 
 }
+const updatellanta=(data,cantidad)=>{
+      
+    return axios.post(apiurl+"/llantasactual",
+    {
+        data,
+        cantidad
+
+    },
+    {
+        headers:{
+            "Authorization": "Bearer " + token.replaceAll('"', '')
+        }
+    })  
+}
 
 const llantasdata = {
     todallanta,
     registrollanta,
+    updatellanta,
     borrarllantas
 }
 export default llantasdata

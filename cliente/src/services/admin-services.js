@@ -36,10 +36,11 @@ const login=async(correo,contrasena)=>{
         
     }
 }
-const aceptado=(data)=>{
+const aceptado=(data,id_boron)=>{
 
     axios.post(api_url+'/aceptado',{
-        data
+        data,
+        id_boron
     },{
         headers:{
             "Authorization": "Bearer " + token.replaceAll('"', '')

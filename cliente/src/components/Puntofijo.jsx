@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,24 +7,43 @@ import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
 
+
+
 import { useState,useEffect } from 'react';
 
 import llantasdata from '../services/llanta-services';
+import loginservices from '../services/user-services';
 import Tablallantas from './Tablas/Tablallantas'
-import Barradenavegacion from './Barranavegacion';
 import Barralogin from './Barralogin';
+
+
 
 function Puntofijo() {
   const [llantasact, setllantas] = useState('');
     const [rinact, setrin] = useState('');
     const [numerollantasact, setnumerollantas] = useState('');
+    const [actuser, setuser] = useState('');
+
+   useEffect(()=>{
+
+    const una=async()=>{
+      const user= await loginservices.getuser()
+     setuser(user.data)
+    }
+    una()
+
+   },[])
 
 
+
+
+   
   const registrollantas=async(e)=>{
     try {
       e.preventDefault();
-    
-     await llantasdata.registrollanta(llantasact,rinact,numerollantasact,localStorage.getItem('id')) 
+      const id=localStorage.getItem('id')
+     await llantasdata.registrollanta(llantasact,rinact,numerollantasact,id) 
+     
      window.location.reload();
     
     } catch (error) {
@@ -35,14 +53,19 @@ function Puntofijo() {
     
 }
 
+
     return(
         <div className='body-inicio'>
          <Barralogin></Barralogin>
-        
-        <h2>Datos del punto</h2>
-        <p>{localStorage.getItem('nombreuser').replaceAll('"', '')}</p>
-        <h1>Datos de las llantas</h1>
+        <div className='info-fijo'>
+        <h3>Datos del punto</h3>
+         <p> <b>Nombre del encargado: </b>{actuser.nombre} </p>
+         <p> <b>Punto de recoleccion: </b>{actuser.direccion} </p>
+         <p> <b>Contacto del encargado: </b>{actuser.numerocelular} </p>
+        </div>
 
+
+        <h2>Datos de las llantas</h2>
         
       <FormControl className='body-llantas' fullWidth>
         <div className='formllantas'>
@@ -100,17 +123,6 @@ function Puntofijo() {
 
 export default Puntofijo
 
-const tipodellantas = [
-  { label: 'Camion' },
-  { label: 'Fuera de carretera' },
-  { label: 'Bicicleta'},
-];
-
-const Rines = [
-    { label: 22.5 },
-    { label: 15 },
-    { label: 20.5},
-  ];
 
 
 

@@ -1,6 +1,5 @@
 const {Admin,User}=require('../database/models')
 const jwt = require('jsonwebtoken');
-const res = require('express/lib/response');
 
 const login=async(req,res)=>{
 
@@ -56,13 +55,28 @@ const allUser=async(req,res)=>{
 }
 
 const aceptado=async(req,res)=>{
-    const {data}=req.body;
+    const {data,id_boron}=req.body;
+
     await User.update({
-        Revisado:1
+        Revisado:1,
+        id_boron
     },{
         where:{id:data}
     })
-    
+    res.json('actualizado')
+
+}
+const idboron=async(req,res)=>{
+    try {
+        const {data,id_boron}=req.body
+        console.log(data,id_boron)
+        await User.update({idboron},{where:{id:data}})
+        res.json('actualizado')
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
 
 }
 

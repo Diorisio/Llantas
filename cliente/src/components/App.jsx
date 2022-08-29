@@ -11,6 +11,8 @@ import Inicio from "./Inicio";
 import Perfilconductor from "./Perfilconductor"
 import Puntofijo from "./Puntofijo"
 import Pruebamaps from "./Pruebamaps"
+import Dashboard from "./Dashboard/Dashboard"
+import Grafica_lineal from "./Dashboard/Grafica"
 
 
 
@@ -31,7 +33,9 @@ function App() {
              <Route path="/conductor" element={<Perfilconductor />}/>
              <Route path="/recolector" element={<Puntofijo />}/>
              <Route path="/prueba" element={<Pruebamaps />}/>
-             <Route path="/tabla" element={<Tablasdeaceptacion />}/>
+             <Route path="/Dashboard/tabla" element={<Tablasdeaceptacion />}/>
+             <Route path="/Dashboard" element={<Dashboard />}/>
+             <Route path="/grafica" element={<Grafica_lineal />}/>
     
              
          </Routes>
