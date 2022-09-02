@@ -76,7 +76,7 @@ function Tablasdeaceptacion() {
             if(UserData.data) { 
                 setCurrentUser(UserData.data)
             }
-            console.log(UserData.data)
+            
         }
 
         getAllUser();
@@ -110,7 +110,7 @@ function Tablasdeaceptacion() {
     setboron(e.value)
 
   }
-  console.log(actboron)
+  
 
   return (
     <>

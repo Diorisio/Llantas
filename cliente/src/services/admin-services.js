@@ -48,11 +48,28 @@ const aceptado=(data,id_boron)=>{
     })
 
 }
+const recibirdata=(id_user)=>{
+    try {
+        return axios.post(api_url+"/enviodata",{
+            id_user
+        },{
+            headers:{
+                "Authorization": "Bearer " + token.replaceAll('"', '')
+            }
+        })
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+
+}
 
 
 const adminservices = {
     allpendient,
     login,
-    aceptado
+    aceptado,
+    recibirdata
 }
 export default adminservices;

@@ -6,31 +6,18 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Box from '@mui/material/Box';
+
 import Skeleton from '@mui/material/Skeleton';
 import { Button } from '@mui/material';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
-import Tablasensores from '../components/Tablas/Tablasensores';
 import Barralogin from './Barralogin'
 
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-  InfoWindow
-} from '@react-google-maps/api';
+import {useJsApiLoader,GoogleMap,Marker,Autocomplete,DirectionsRenderer,InfoWindow} from '@react-google-maps/api';
 
 import sensorsdata from '../services/sensors-services';
 import transportista from '../services/transportista-services';
-
-const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
 /* ------------------------google api------------------- */
 
@@ -44,13 +31,7 @@ const markers = [
 
 /* ---------------------------------------------------- */
 
-const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: 60,
-    lineHeight: '60px',
-  }));
+
 
 function Perfilconductor() {
     const [co2act, setco2] = useState('');
@@ -79,8 +60,6 @@ function Perfilconductor() {
           console.log(error)
        }
       }
-
-   
 
   /* --------------------------------------------------------------------- */
 /*------------------- Consumir apis de sensores de gps------------- */
@@ -158,17 +137,12 @@ function Perfilconductor() {
    const center = 
     {lat: 6.336618900299072, lng: -75.56346130371094}
     
-  
-  
-   
   const originRef = useRef()
   const destiantionRef = useRef()
   
   const [map, setMap] = useState(null)
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [activeMarker, setActiveMarker] = useState(null);
-  
-
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
@@ -177,14 +151,12 @@ function Perfilconductor() {
     setActiveMarker(marker);
   };
 
-
    const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ['places'],
 
   })
-  
 
   if (!isLoaded) {
     return <Skeleton/>
@@ -203,8 +175,7 @@ function Perfilconductor() {
         // eslint-disable-next-line no-undef
         travelMode: google.maps.TravelMode.DRIVING,
       })
-      
-      
+  
       setDirectionsResponse(results)
       setorigen(directionsResponse.routes[0].legs[0].start_address)
       setdestino(directionsResponse.routes[0].legs[0].end_address)
@@ -214,18 +185,13 @@ function Perfilconductor() {
       console.log(error)
       
     }
-    
   }
-
-
   function clearRoute() {
     setDirectionsResponse(null)
     originRef.current.value = ''
     destiantionRef.current.value = ''
     window.location.reload();
   }
-
-  
    /* ---------------------------- */
   
     return(
@@ -264,7 +230,6 @@ function Perfilconductor() {
       <input ref={destiantionRef} type="text" />
       </Autocomplete>
       
-    
     <Button variant="contained" type='submit' onClick={calculateRoute}>Calcular ruta</Button>
     <Button variant="contained" onClick={() => {map.panTo(center); map.setZoom(18)}}>
     <LocationOnIcon></LocationOnIcon>
@@ -275,7 +240,6 @@ function Perfilconductor() {
     </Button>
     <Button variant="contained" onClick={register} type='submit'>Iniciar ruta</Button>
  
-    
     <GoogleMap
         center={center}
         zoom={18}
@@ -284,7 +248,6 @@ function Perfilconductor() {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         >
 
-         
         {markers.map(({ id, name, position }) => (
         <Marker
           key={id}
@@ -300,74 +263,12 @@ function Perfilconductor() {
         
       ))}
       
-        
-        
         {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
           
-          
       </GoogleMap> 
-
     {/* ---------------------------------------------------- */}
-
-   {/* ---------------------------sensor de gas ---------- */}
-    <Grid container spacing={2}>
-      {[darkTheme].map((theme, index) => (
-        <Grid item xs={6} key={index}>
-          <ThemeProvider theme={theme}>
-            <Box
-              sx={{
-                p: 2,
-                bgcolor: 'background.default',
-                display: 'grid',
-                gridTemplateColumns: { md: '1fr 1fr' },
-                gap: 2,
-              }}
-            >
-                <Item key={co2act} elevation={co2act}>
-                  {`CO2=${co2act}`}
-                </Item>
-            </Box>
-          </ThemeProvider>
-        </Grid>
-      ))}
-    </Grid>
-
-
-    <Grid container spacing={2}>
-      {[darkTheme].map((theme, index) => (
-        <Grid item xs={6} key={index}>
-          <ThemeProvider theme={theme}>
-            <Box
-              sx={{
-                p: 2,
-                bgcolor: 'background.default',
-                display: 'grid',
-                gridTemplateColumns: { md: '1fr 1fr' },
-                gap: 2,
-              }}
-            >
-                <Item key={coact} elevation={coact}>
-                  {`CO=${coact}`}
-                </Item>
-            </Box>
-          </ThemeProvider>
-        </Grid>
-      ))}
-    </Grid>
-    <div className='coordenadas'>
-    <p>Latitud:{latitudact}</p>
-    <p>Longitud:{longintudact}</p>
-    </div>
-    {/* ---------------------------------------------------------- */}
-    {/* --------------------tablas sensores--------------- */}
-     <Tablasensores></Tablasensores>
- 
-
-
-    {/* -------------------------------------------------- */}
-
         </div>
     )
     

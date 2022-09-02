@@ -10,9 +10,9 @@ import LoginAdmin from "./LoginAdmin"
 import Inicio from "./Inicio";
 import Perfilconductor from "./Perfilconductor"
 import Puntofijo from "./Puntofijo"
-import Pruebamaps from "./Pruebamaps"
 import Dashboard from "./Dashboard/Dashboard"
-import Grafica_lineal from "./Dashboard/Grafica"
+import Transportista from "./Dashboard/Transportistas"
+import Tablasensores from "./Tablas/Tablasensores"
 
 
 
@@ -32,10 +32,11 @@ function App() {
              <Route path="/adminlogin" element={<LoginAdmin />}/>
              <Route path="/conductor" element={<Perfilconductor />}/>
              <Route path="/recolector" element={<Puntofijo />}/>
-             <Route path="/prueba" element={<Pruebamaps />}/>
              <Route path="/Dashboard/tabla" element={<Tablasdeaceptacion />}/>
+             <Route path="/Dashboard/transportista" element={<Transportista />}/>
+             <Route path="/Dashboard/transportista/:id" element={<Tablasensores />}/>
              <Route path="/Dashboard" element={<Dashboard />}/>
-             <Route path="/grafica" element={<Grafica_lineal />}/>
+             
     
              
          </Routes>

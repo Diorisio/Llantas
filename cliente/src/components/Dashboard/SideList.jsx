@@ -26,7 +26,10 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
+
+
 import Tabladeaceptacion from './../Tablas/Tablasdeaceptacion'
+import Transportista from './Transportistas'
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -111,6 +114,8 @@ export default function SideList() {
   const [open, setOpen] = React.useState(false);
   const [selectedLink, setSelectedLink] = useState('');
 
+  
+
 
   const list = useMemo(
     () => [
@@ -130,15 +135,15 @@ export default function SideList() {
       {
         title: 'Trasportista',
         icon: <DirectionsCarIcon />,
-        link: 'requests',
-        component: <Tabladeaceptacion {...{ setSelectedLink, link: 'requests' }} />,
+        link: 'transportista',
+        component: <Transportista {...{ setSelectedLink, link: 'transportista' }} />,
       }
       ,
       {
         title: 'Punto fijo',
         icon: <PersonPinCircleIcon />,
         link: 'requests',
-        component: <Tabladeaceptacion {...{ setSelectedLink, link: 'requests' }} />,
+        component: <Tabladeaceptacion {...{  link: 'requests' }} />,
       }
       
     ],

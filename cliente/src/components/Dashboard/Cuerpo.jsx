@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
-import dashboardservices from '../../services/dashboard-services';
+
 import Grafica_lineal from './Grafica';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,28 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
-export default function Cuerpo() {
-
-  const [actAlluser, setAlluser] = React.useState([]);
-  const [actllantas, setllantas] = React.useState([]);
-
-  React.useEffect(()=>{
-
-    const alluser=async()=>{
-      try {
-        const data=await dashboardservices.alluser();
-        const llantas=await dashboardservices.llantas();
-          setAlluser(data.data)
-          setllantas(llantas.data)
-
-      } catch (error) {
-        
-      }
-
-    }
-    alluser()
-
-  },[])
+export default function Cuerpo({actAlluser,actllantas}) {
   
 
     return (
@@ -111,6 +90,8 @@ export default function Cuerpo() {
               
             </Grid>
             <Grafica_lineal></Grafica_lineal>
+
+          
          
         </Grid>
       );

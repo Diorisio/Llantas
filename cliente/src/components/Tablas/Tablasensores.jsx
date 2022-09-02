@@ -2,7 +2,12 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 
-import sensorsdata from '../../services/sensors-services'
+import adminservices from '../../services/admin-services'
+import Barralogin from '../Barralogin';
+import {useParams} from "react-router-dom";
+
+import Gases_grafica from '../Dashboard/Gases_grafica';
+
 
 
 const columns = [
@@ -25,7 +30,11 @@ const columns = [
 
 
 
+
 export default function Tablasensores() {
+
+  const {id}=useParams();
+  
 
   const [currentUser, setCurrentUser] = React.useState([]);
   
@@ -33,7 +42,9 @@ export default function Tablasensores() {
 React.useEffect(()=>{
 
   const getAllUser = async () => {
-      const UserData = await sensorsdata.recibirdata();
+    
+      const UserData = await adminservices.recibirdata(id);
+      
       if(UserData.data) { 
           setCurrentUser(UserData.data)
       }
@@ -42,8 +53,10 @@ React.useEffect(()=>{
 
   getAllUser();
  }, []);
+ 
   return (
     <>
+    <Barralogin></Barralogin>
     
     <div style={{ height: 400, width: '100%',background:"white" }}>
       <DataGrid
@@ -54,6 +67,7 @@ React.useEffect(()=>{
         
       />
     </div>
+    <Gases_grafica gases={currentUser}></Gases_grafica>
     </>
   );
 }

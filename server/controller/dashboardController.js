@@ -1,10 +1,13 @@
+
 const {User,PuntoRecoleccion}=require('../database/models')
+const { Op } = require("sequelize");
 
 const TotalUsers=async(req,res)=>{
     try {
-        const {rows,count }=await User.findAndCountAll({where:{Revisado:1},attributes: ['cargo','nombre']})
+        const {count }=await User.findAndCountAll({where:{Revisado:1},attributes: ['id','cargo','nombre']})
         const {rows:rows1,count:count1 }=await User.findAndCountAll({where:{Revisado:1,cargo:"Punto fijo"}})
-         return res.json({usuarios:rows,totaldeusuarios:count,totalpuntos:count1})
+        const alluser=await User.findAll({where:{Revisado:1,cargo:"Recolector"},attributes: ['id','cargo','nombre','id_boron']})
+         return res.json({usuarios:alluser,totaldeusuarios:count,totalpuntos:count1})
         
     } catch (error) {
         console.log(error)
@@ -30,8 +33,18 @@ const llantas=async(req,res)=>{
     }
 }
 
+
+const alltransportistas=(req,res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
 module.exports={
     TotalUsers,
     llantas,
+    alltransportistas
     
 }

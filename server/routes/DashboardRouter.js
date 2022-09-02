@@ -7,4 +7,5 @@ const {TotalUsers,llantas} =require('../controller/dashboardController')
 router.get('/',permiso,TotalUsers)
 router.get('/llantas',permiso,llantas)
 
+
 module.exports = router;

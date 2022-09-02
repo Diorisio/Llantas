@@ -1,5 +1,6 @@
 const {Admin,User}=require('../database/models')
 const jwt = require('jsonwebtoken');
+const {Sensors}=require('../database/models')
 
 const login=async(req,res)=>{
 
@@ -79,10 +80,23 @@ const idboron=async(req,res)=>{
     }
 
 }
+const enviodatos=async(req,res)=>{
+    try {
+        const{id_user}=req.body
+        const alldata=await Sensors.findAll({
+            where:{id_user}
+        }) 
+        return res.json(alldata)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 module.exports={
     login,
     register,
     allUser,
-    aceptado
+    aceptado,
+    enviodatos
 }

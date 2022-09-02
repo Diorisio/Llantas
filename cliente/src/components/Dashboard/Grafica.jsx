@@ -24,10 +24,10 @@ ChartJS.register(
 
 export default function Grafica_lineal(){
     const data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['Enero', 'February', 'March', 'April', 'May', 'June', 'July','augusto'],
         datasets: [{
             label: 'Llantas recogidas',
-            data: [65,90, 59, 80, 81, 56, 55, 40],
+            data: [50,90, 59, 80, 81, 56, 55, 40,80],
             
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
