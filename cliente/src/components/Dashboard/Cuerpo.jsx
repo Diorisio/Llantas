@@ -24,6 +24,7 @@ export default function Cuerpo({actAlluser,actllantas}) {
 
     return (
         <Grid sx={{display:'flex'}}>
+          <div>
             <Grid item sx={{
               margin:'10px'
             }}>
@@ -59,7 +60,7 @@ export default function Cuerpo({actAlluser,actllantas}) {
                   }}
                 >
                     <Item key='usuarios' >
-                      <p className='parrafo'>Llantas registradas: {actllantas.registradas}</p>
+                      <p className='parrafo'>Llantas registradas: {actllantas}</p>
                     </Item>
                   
                 </Box>
@@ -89,7 +90,8 @@ export default function Cuerpo({actAlluser,actllantas}) {
 
               
             </Grid>
-            <Grafica_lineal></Grafica_lineal>
+            </div>
+            <Grafica_lineal actllantas={actllantas}></Grafica_lineal>
 
           
          

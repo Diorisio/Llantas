@@ -53,7 +53,6 @@ React.useEffect(()=>{
 
   getAllUser();
  }, []);
- 
   return (
     <>
     <Barralogin></Barralogin>

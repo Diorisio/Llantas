@@ -19,7 +19,7 @@ export default function Dashboard() {
         const data=await dashboardservices.alluser();
         const llantas=await dashboardservices.llantas();
           setAlluser(data.data)
-          setllantas(llantas.data)
+          setllantas(llantas.data.registradas[0].cantidad)
 
       } catch (error) {
         
@@ -29,6 +29,7 @@ export default function Dashboard() {
     alluser()
 
   },[])
+
 
     return(
         <>

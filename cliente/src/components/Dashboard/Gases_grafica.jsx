@@ -12,6 +12,7 @@ import {
   Filler,} from 'chart.js';
 
 ChartJS.register(
+
     CategoryScale,
     LinearScale,
     PointElement,
@@ -38,24 +39,36 @@ export default function Gases_grafica({gases}){
     const dataco2=[]
     const dataco=[]
     const hora=[]
+    if (gases.length!=0) {
 
-    for (let i = gases.length-1; i >=(gases.length-10) ; i--) {
-        dataco2.push(gases[i].sensorCO2)
-        dataco.push(gases[i].sensorCO)
-        hora.push(formatDate(new Date(gases[i].updatedAt)))
+        for (let i = gases.length-1; i >=(gases.length-10) ; i--) {
+            dataco2.push(gases[i].sensorCO2)
+            dataco.push(gases[i].sensorCO)
+            hora.push(formatDate(new Date(gases[i].updatedAt)))
+    
+            
+        }
 
-        
     }
+    
     const data = {
         
-        labels: hora,
+        labels: hora.reverse(),
         datasets: [{
-            label: 'My First Dataset',
+            label: 'CO2',
             data: dataco2,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
-          }]
+          },
+          {
+            label: 'CO',
+            data: dataco,
+            fill: false,
+            borderColor: 'rgb(75, 192, 0)',
+            tension: 0.1
+          }
+        ]
         }
 
 

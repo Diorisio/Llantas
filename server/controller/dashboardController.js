@@ -1,6 +1,7 @@
 
 const {User,PuntoRecoleccion}=require('../database/models')
-const { Op } = require("sequelize");
+const { Op, DATEONLY, DATE } = require("sequelize");
+const { Sequelize } = require('sequelize');
 
 const TotalUsers=async(req,res)=>{
     try {
@@ -18,14 +19,17 @@ const TotalUsers=async(req,res)=>{
 const llantas=async(req,res)=>{
     try {
         
-        const allregistrada=await PuntoRecoleccion.findAll({where:{Estado:1},attributes: ['updatedAt','cantidad']})
-        const allrecogidas=await PuntoRecoleccion.findAll({where:{Estado:0},attributes: ['updatedAt','cantidad']})
-        const todasresgristadas=allregistrada.reduce((ante,actual)=>ante+actual.cantidad,0)
-        const todasrecogidas=allrecogidas.reduce((ante,actual)=>ante+actual.cantidad,0)
-        res.json({registradas:todasresgristadas,
-            recogidas:todasrecogidas,
-            registradasversus:allregistrada,
-            recogidasversus:allrecogidas})
+        const allregistrada2=await PuntoRecoleccion.findAll({where:{Estado:1},attributes:  [[Sequelize.fn('sum', Sequelize.col('cantidad')), 'cantidad']]})
+
+        const allregistradafecha=await PuntoRecoleccion.findAll({where:{Estado:1}, group: [Sequelize.fn('day', Sequelize.col('createdAt'))],
+        attributes: ['createdAt', [Sequelize.fn('sum', Sequelize.col('cantidad')), 'cantidad']],})
+
+        const allrecogidafecha=await PuntoRecoleccion.findAll({where:{Estado:0}, group: [Sequelize.fn('day', Sequelize.col('createdAt'))],
+        attributes: ['createdAt', [Sequelize.fn('sum', Sequelize.col('cantidad')), 'cantidad']],})
+           
+        res.json({registradas:allregistrada2,
+            allregistradas:allregistradafecha,
+            allrecogida:allrecogidafecha,})
 
         
     } catch (error) {
@@ -34,17 +38,10 @@ const llantas=async(req,res)=>{
 }
 
 
-const alltransportistas=(req,res)=>{
-    try {
-        
-    } catch (error) {
-        
-    }
-}
+
 
 module.exports={
     TotalUsers,
     llantas,
-    alltransportistas
     
 }

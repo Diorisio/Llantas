@@ -1,4 +1,4 @@
-
+import * as React from 'react';
 import {Line} from 'react-chartjs-2'
 import {  
     Chart as ChartJS,
@@ -11,6 +11,8 @@ import {
   Legend,
   Filler,} from 'chart.js';
 
+  import dashboardservices from '../../services/dashboard-services';
+
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -22,33 +24,59 @@ ChartJS.register(
     Filler
   );
 
+  
+  function formatDate(date) {
+
+    return (date.getDate()) + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+  }
+
 export default function Grafica_lineal(){
+  const [actllantas, setllantas] = React.useState([]);
+
+  React.useEffect(()=>{
+
+    const llantas=async()=>{
+      try {
+          const llantas=await dashboardservices.llantas();
+          setllantas(llantas.data)
+
+      } catch (error) {
+        
+      }
+    }
+    llantas()
+
+  },[])
+
+    const recogidas=[]
+    const registradas=[]
+    const fecha_recogidas=[]
+    const fecha_registradas=[]
+
+     if (actllantas.allrecogida!==undefined) {
+
+        for (let i = 0; i <actllantas.allrecogida.length ; i++) {
+          recogidas.push(actllantas.allrecogida[i].cantidad)
+          fecha_recogidas.push(formatDate(new Date(actllantas.allrecogida[i].createdAt))) 
+        }
+
+        for (let i = 0; i <actllantas.allregistradas.length ; i++) {
+          registradas.push(actllantas.allregistradas[i].cantidad)
+          fecha_registradas.push(formatDate(new Date(actllantas.allregistradas[i].createdAt))) 
+        }
+      } 
+    
+
     const data = {
-        labels: ['Enero', 'February', 'March', 'April', 'May', 'June', 'July','augusto'],
+        labels: fecha_recogidas,
         datasets: [{
             label: 'Llantas recogidas',
-            data: [50,90, 59, 80, 81, 56, 55, 40,80],
-            
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
+            data: recogidas,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          }
+        ]
         }
 
 
