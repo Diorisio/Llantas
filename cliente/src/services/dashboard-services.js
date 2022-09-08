@@ -21,9 +21,19 @@ const llantas=()=>{
     })  
 
 }
+const llantasuser=(id)=>{
+    console.log(id)
+    return axios.get(api_url+'/llantas/'+id,{
+        headers:{
+            "Authorization": "Bearer " + token.replaceAll('"', '')
+        }
+    })  
+
+}
 
 const dashboardservices = {
     alluser,
-    llantas
+    llantas,
+    llantasuser
 }
 export default dashboardservices;

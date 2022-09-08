@@ -198,7 +198,7 @@ function Perfilconductor() {
         <div className='body-inicio'>
         <Barralogin></Barralogin>
     <div className='body-perfilconductor'>
-      
+      <></>
       <FormControl variant="filled" sx={{ m: 1, minWidth: 170 }}>
         <InputLabel id="demo-simple-select-filled-label">Tipo de vehiculo</InputLabel>
         <Select
@@ -248,7 +248,7 @@ function Perfilconductor() {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         >
 
-        {markers.map(({ id, name, position }) => (
+        {/* {markers.map(({ id, name, position }) => (
         <Marker
           key={id}
           position={position}
@@ -261,7 +261,10 @@ function Perfilconductor() {
           ) : null}
         </Marker>
         
-      ))}
+      ))} */}
+      <Marker
+          position={center}
+        ></Marker>
       
         {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />

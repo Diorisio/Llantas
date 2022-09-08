@@ -110,6 +110,7 @@ function Tablasdeaceptacion() {
     setboron(e.value)
 
   }
+  console.log(actboron)
   
 
   return (

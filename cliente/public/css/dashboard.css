@@ -12,3 +12,7 @@
     background-color: beige;
 
 }
+.graficas{
+    display: flex;
+    gap: 10px;
+}

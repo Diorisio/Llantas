@@ -1,6 +1,7 @@
 const {Admin,User}=require('../database/models')
 const jwt = require('jsonwebtoken');
 const {Sensors}=require('../database/models')
+const { Sequelize } = require('sequelize');
 
 const login=async(req,res)=>{
 
@@ -83,10 +84,12 @@ const idboron=async(req,res)=>{
 const enviodatos=async(req,res)=>{
     try {
         const{id_user}=req.body
+        const allregistradafecha=await Sensors.findAll({where:{id_user}, group: [Sequelize.fn('day', Sequelize.col('createdAt'))],
+        attributes: ['createdAt', [Sequelize.fn('sum', Sequelize.col('sensorCO')), 'sensorCO'],[Sequelize.fn('sum', Sequelize.col('sensorCO2')), 'sensorCO2']],})
         const alldata=await Sensors.findAll({
             where:{id_user}
         }) 
-        return res.json(alldata)
+        return res.json({datos_sensores:alldata,consolidado_sensores:allregistradafecha})
         
     } catch (error) {
         console.log(error)

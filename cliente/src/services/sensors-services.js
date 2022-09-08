@@ -6,7 +6,7 @@ const Id_boron=localStorage.getItem('id_boron')?localStorage.getItem('id_boron')
 const api_url =`https://api.particle.io/v1/devices/${Id_boron}/`
 const apikey="?access_token=73aac12607fe32528cb496467576968fff4d00ed"
 const apiurl="http://localhost:3400/api/"
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");    
 
 
 

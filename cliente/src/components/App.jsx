@@ -13,6 +13,8 @@ import Puntofijo from "./Puntofijo"
 import Dashboard from "./Dashboard/Dashboard"
 import Transportista from "./Dashboard/Transportistas"
 import Tablasensores from "./Tablas/Tablasensores"
+import Dashboard_Puntofijo from "./Dashboard/Dashboard_Puntofijo"
+import TablaDashboard_llanta from "./Tablas/TablaDashboard_llanta"
 
 
 
@@ -36,6 +38,8 @@ function App() {
              <Route path="/Dashboard/transportista" element={<Transportista />}/>
              <Route path="/Dashboard/transportista/:id" element={<Tablasensores />}/>
              <Route path="/Dashboard" element={<Dashboard />}/>
+             <Route path="/Dashboard/puntofijo" element={<Dashboard_Puntofijo />}/>
+             <Route path="/Dashboard/puntofijo/:id" element={<TablaDashboard_llanta />}/>
              
     
              

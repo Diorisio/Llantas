@@ -142,8 +142,8 @@ export default function SideList() {
       {
         title: 'Punto fijo',
         icon: <PersonPinCircleIcon />,
-        link: 'requests',
-        component: <Tabladeaceptacion {...{  link: 'requests' }} />,
+        link: 'Puntofijo',
+        component: <Tabladeaceptacion {...{  link: 'Puntofijo' }} />,
       }
       
     ],

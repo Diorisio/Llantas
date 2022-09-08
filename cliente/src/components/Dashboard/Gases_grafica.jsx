@@ -35,6 +35,7 @@ ChartJS.register(
   }
 
 export default function Gases_grafica({gases}){
+  
     
     const dataco2=[]
     const dataco=[]
@@ -45,25 +46,24 @@ export default function Gases_grafica({gases}){
             dataco2.push(gases[i].sensorCO2)
             dataco.push(gases[i].sensorCO)
             hora.push(formatDate(new Date(gases[i].updatedAt)))
-    
-            
         }
 
     }
+    
     
     const data = {
         
         labels: hora.reverse(),
         datasets: [{
             label: 'CO2',
-            data: dataco2,
+            data: dataco2.reverse(),
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
           },
           {
             label: 'CO',
-            data: dataco,
+            data: dataco.reverse(),
             fill: false,
             borderColor: 'rgb(75, 192, 0)',
             tension: 0.1
@@ -73,12 +73,22 @@ export default function Gases_grafica({gases}){
 
 
       var options = {
-        responsive:false
+        responsive:false,
+        scales: {
+            y: {
+                title:{
+                    display:true,
+                    text:'Partes por millon (ppm)'
+                }
+            }
+          } 
+        
       }
       
    
     return(
-        <>
+        <div>
+        <h2>Muestras tomadas por min</h2>
         <Line
          data={data}
          width="400px"
@@ -86,9 +96,7 @@ export default function Gases_grafica({gases}){
          className='line-grafica'
 
         options={options} 
-            
-            
         />
-        </>
+        </div>
     )
 }
